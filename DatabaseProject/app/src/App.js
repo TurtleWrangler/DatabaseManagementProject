@@ -36,9 +36,8 @@ function App() {
           </p>
         </header>
         <Router>
-          <Button><Link to="/sign-in">Sign-In</Link></Button>
-          <Button><Link to="/register">Register</Link></Button>
           <Route exact path="/sign-in">
+            <Button><Link to="/register">Register</Link></Button>
             <Box
               component="form"
               sx={{
@@ -74,6 +73,7 @@ function App() {
             </Box>
           </Route>
           <Route exact path="/register">
+            <Button><Link to="/sign-in">Sign-In</Link></Button>
             <Box
               component="form"
               sx={{
