@@ -3,6 +3,7 @@ import './App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
           </p>
         </header>
         <Router>
+          <Route exact path="/">
+            <Button><Link to="/sign-in">Sign-In</Link></Button>
+            <Button><Link to="/register">Register</Link></Button>
+          </Route>
           <Route exact path="/sign-in">
             <Button><Link to="/register">Register</Link></Button>
             <Box
@@ -165,6 +170,8 @@ function App() {
             </Box>
           </Route>
           <Route exact path="/information">
+            <Button><Link to="/sign-in">Sign-In</Link></Button>
+            <Button><Link to="/register">Register</Link></Button>
             Hello
           </Route>
         </Router>
