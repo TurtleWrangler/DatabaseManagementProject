@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import axios from 'axios';
+// import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 class App extends React.Component {
@@ -89,7 +89,14 @@ class App extends React.Component {
                   onInput={ e => this.setState({password: e.target.value})}
                 />
               </div>
-              <Button type="submit"component={Link} to={'/information'}>Submit</Button>
+              <Button type="submit">
+                Submit
+              </Button>
+              <Button>
+                <Link to="/information">
+                  Sign-In
+                </Link>
+              </Button>
             </Box>
           </Route>
           <Route exact path="/register">
@@ -177,9 +184,12 @@ class App extends React.Component {
                   onInput={ e => this.setState({dateOfHire: e.target.value}) }
                 />
               </div>
+              <Button type="submit">
+                Submit
+              </Button>
               <Button>
                 <Link to="/sign-in">
-                  Submit
+                  Go to Sign-In
                 </Link>
               </Button>
             </Box>

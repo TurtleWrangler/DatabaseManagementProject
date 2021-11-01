@@ -19,3 +19,24 @@ C:\Users\Derek\OneDrive - The University of Akron\Fall 21\Database Management\Pr
 C:\Users\Derek\OneDrive - The University of Akron\Fall 21\Database Management\ProjectRepo\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.dll
 C:\Users\Derek\OneDrive - The University of Akron\Fall 21\Database Management\ProjectRepo\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.pdb
 C:\Users\Derek\OneDrive - The University of Akron\Fall 21\Database Management\ProjectRepo\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.genruntimeconfig.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\appsettings.Development.json
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\appsettings.json
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.exe
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.deps.json
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.runtimeconfig.json
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.runtimeconfig.dev.json
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\TMS_API.pdb
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.csproj.AssemblyReference.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.GeneratedMSBuildEditorConfig.editorconfig
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.AssemblyInfoInputs.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.AssemblyInfo.cs
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.csproj.CoreCompileInputs.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.MvcApplicationPartsAssemblyInfo.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\staticwebassets\TMS_API.StaticWebAssets.Manifest.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\staticwebassets\TMS_API.StaticWebAssets.xml
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\scopedcss\bundle\TMS_API.styles.css
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.RazorTargetAssemblyInfo.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.pdb
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.genruntimeconfig.cache
