@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = server
-build_property.ProjectDir = d:\Brandon\git\DatabaseManagementProject\DatabaseProject\server\
+build_property.ProjectDir = D:\Brandon\git\DatabaseManagementProject\DatabaseProject\server\

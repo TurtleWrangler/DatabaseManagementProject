@@ -20,26 +20,12 @@ namespace server
                 {
 
                 }
-
-                // string sql = "SELECT * FROM employee";
-                // string sql = "INSERT INTO department (id, name) VALUES ('351522866665868872725195888142226895','Human Resources')";
-                // MySqlCommand cmd = new MySqlCommand(sql, conn);
-                // MySqlDataReader rdr = cmd.ExecuteReader();
-
-                // while (rdr.Read())
-                // {
-                //     Console.WriteLine(rdr[0] + " -- " + rdr[1]);
-                // }
-                // rdr.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 conn.Close();
             }
-
-            // conn.Close();
-            // Console.WriteLine("Done.");
         }
     }
 }

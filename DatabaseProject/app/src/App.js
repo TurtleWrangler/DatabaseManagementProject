@@ -77,7 +77,14 @@ function App() {
                   onInput={ e=>setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit"component={Link} to={'/information'}>Submit</Button>
+              <Button type="submit">
+                Submit
+              </Button>
+              <Button>
+                <Link to="/information">
+                  Sign-In
+                </Link>
+              </Button>
             </Box>
           </Route>
           <Route exact path="/register">
@@ -165,9 +172,12 @@ function App() {
                   onInput={ e=>setDateOfHire(e.target.value)}
                 />
               </div>
+              <Button type="submit">
+                Submit
+              </Button>
               <Button>
                 <Link to="/sign-in">
-                  Submit
+                  Go to Sign-In
                 </Link>
               </Button>
             </Box>
