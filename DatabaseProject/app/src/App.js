@@ -3,7 +3,7 @@ import './App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import axios from 'axios';
+// import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 function App() {
@@ -18,6 +18,8 @@ function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [dateOfHire, setDateOfHire] = useState('');
+  const [hoursWorked, setHoursWorked] = useState('');
+  const [comments, setComments] = useState('');
 
   function handleLogInSubmit(event) {
     event.preventDefault();
@@ -27,6 +29,11 @@ function App() {
   function handleRegisterSubmit(event) {
     event.preventDefault();
     console.log( 'Email:', email, 'Password: ', password, 'First Name: ', firstName); 
+  }
+
+  function handleHoursSubmitted(event) {
+    event.preventDefault();
+    console.log(); 
   }
 
   return (
@@ -70,11 +77,7 @@ function App() {
                   onInput={ e=>setPassword(e.target.value)}
                 />
               </div>
-              <Button>
-                <Link to="/information">
-                  Submit
-                </Link>
-              </Button>
+              <Button type="submit"component={Link} to={'/information'}>Submit</Button>
             </Box>
           </Route>
           <Route exact path="/register">
@@ -172,7 +175,38 @@ function App() {
           <Route exact path="/information">
             <Button><Link to="/sign-in">Sign-In</Link></Button>
             <Button><Link to="/register">Register</Link></Button>
-            Hello
+            <br/>
+            <Button><Link to="/check-hours">Check Hours</Link></Button>
+            <Button><Link to="/create-hours">Create Timesheet</Link></Button>
+          </Route>
+          <Route exact path="/create-hours">
+            <Button><Link to="/information">Home Page</Link></Button>
+            <Box
+              component="form"
+              sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+              onSubmit={handleHoursSubmitted}
+            >
+            <TextField
+                required
+                id="outlined-required"
+                label="Required Hours Worked"
+                placeholder="Hours Worked"
+                value={hoursWorked}
+                onInput={ e=>setHoursWorked(e.target.value)}
+            />
+            <TextField
+                required
+                id="outlined-required"
+                label="Comments"
+                placeholder="Comments"
+                value={comments}
+                onInput={ e=>setComments(e.target.value)}
+            />
+            </Box>
           </Route>
         </Router>
       </div>
