@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    marginLeft: theme.spacing(10),
     color: "white",
     "&:hover": {
       color: "yellow",
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   active: {
     textDecoration: "none",
     fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    marginLeft: theme.spacing(10),
     borderBottom: "1px solid white"
   }
 }));
