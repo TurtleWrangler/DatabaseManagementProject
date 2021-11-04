@@ -21,11 +21,31 @@ namespace TMS_API.Controllers
             MySqlCommand cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.Add("@employee_id", MySqlDbType.VarChar, 36).Value = timeEntry.EmployeeID;
             cmd.Parameters.Add("@date", MySqlDbType.Date).Value = timeEntry.Date;
-            cmd.Parameters.Add("@hours_worked", MySqlDbType.VarChar, 20).Value = timeEntry.HoursWorked;
+            cmd.Parameters.Add("@hours_worked", MySqlDbType.Decimal).Value = timeEntry.HoursWorked;
             cmd.Parameters.Add("@comments", MySqlDbType.Text).Value = timeEntry.Comments;
             cmd.Parameters.Add("@submission_time", MySqlDbType.DateTime).Value = timeEntry.SubmissionTime;
             cmd.Parameters.Add("@week_start_date", MySqlDbType.DateTime).Value = "2021-11-01";
 
+            cmd.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        [HttpPut]
+        public void HoursUpdate(TimeEntry timeEntry)
+        {
+            Connection.Open();
+            string query = "UPDATE time_entry SET hours_worked=" + timeEntry.HoursWorked + ", comments='" + timeEntry.Comments + "' WHERE employee_id='" + timeEntry.EmployeeID + "'";
+            MySqlCommand cmd = new MySqlCommand(query, Connection);
+            cmd.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        [HttpDelete]
+        public void HoursDelete(TimeEntry timeEntry)
+        {
+            Connection.Open();
+            string query = "DELETE FROM time_entry WHERE employee_id='" + timeEntry.EmployeeID + "'";
+            MySqlCommand cmd = new MySqlCommand(query, Connection);
             cmd.ExecuteNonQuery();
             Connection.Close();
         }
