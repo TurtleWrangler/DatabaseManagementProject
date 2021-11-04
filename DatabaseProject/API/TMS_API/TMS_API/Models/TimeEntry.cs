@@ -14,6 +14,6 @@ namespace TMS_API
 
         public DateTime SubmissionTime { get; set; }
 
-        public DateTime WeekStartTime { get; set; }
+        public DateTime WeekStartDate { get; set; }
     }
 }
