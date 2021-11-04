@@ -3,3 +3,10 @@
     grid-template-columns: auto auto;
     justify-content: center;
 }
+
+.submit {
+    grid-column: 1 / span 2;  
+}
+.heading {
+    padding-top: 20px;
+}

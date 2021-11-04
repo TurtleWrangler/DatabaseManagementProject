@@ -1,10 +1,11 @@
 import React from 'react';
 import '../App.css';
 import '../Register.css';
-import {Box, TextField, Button, Select, MenuItem, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput} from '@mui/material';
+import {Box, TextField, Button, Select, MenuItem, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { DatePicker } from '@mui/lab';
 
 class Register extends React.Component {
 
@@ -34,25 +35,58 @@ class Register extends React.Component {
     this.setState((prevState) => {return({showPassword: !prevState.showPassword})});
   }
 
+  handleRegisterSubmit = () => {
+    axios(
+      "http://localhost:38621/register",
+      {
+        method: 'post',
+        data: {
+          Email: this.state.email,
+          Password: this.state.password,
+          FirstName: this.state.firstName,
+          LastName: this.state.lastName,
+          Occupation: this.state.occupation,
+          Address: this.state.address,
+          PhoneNumber: this.state.phoneNumber,
+          DateOfBirth: this.state.dateOfBirth,
+          DateOfHire: this.state.dateOfHire,
+          DeptID: this.state.department
+        },
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            mode: 'no-cors'
+          }
+        }).then((data) => {
+        //this.setState({departments: data.data});
+      }
+    );
+  }
+
   componentDidMount = () => {
     axios(
       "http://localhost:38621/department",
-    {
-      method: 'GET',
-      headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          mode: 'no-cors'
-        }
-      }).then((data) => {
-      this.setState({departments: data.data});
-    });
+      {
+        method: 'GET',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            mode: 'no-cors'
+          }
+        }).then((data) => {
+        this.setState({departments: data.data});
+      }
+    );
   }
 
   render() {
       return(
         <Route exact path="/register">
+          <Typography variant="h2" component="div" gutterBottom className='heading'>
+            Registration
+          </Typography>
           <Box
+            noValidation
             component="form"
             sx={{
               '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -129,21 +163,21 @@ class Register extends React.Component {
                 value={this.state.phoneNumber}
                 onInput={ e => this.setState({phoneNumber: e.target.value}) }
               />
-              <TextField
+              <DatePicker
                 required
                 id="outlined-dob-required"
                 label="Date of Birth"
-                placeholder="Date of Birth"
                 value={this.state.dateOfBirth}
-                onInput={ e => this.setState({dateOfBirth: e.target.value}) }
+                onChange={ e => this.setState({dateOfBirth: e}) }
+                renderInput={(params) => <TextField {...params} error={false} />}
               />
-              <TextField
+              <DatePicker
                 required
                 id="outlined-doh-required"
                 label="Date of Hire"
-                placeholder="Date of Hire"
                 value={this.state.dateOfHire}
-                onInput={ e => this.setState({dateOfHire: e.target.value}) }
+                onChange={ e => this.setState({dateOfHire: e}) }
+                renderInput={(params) => <TextField {...params} error={false} />}
               />
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="label">Department *</InputLabel>
@@ -160,7 +194,7 @@ class Register extends React.Component {
                   ))}
                 </Select>
               </FormControl>
-              <Button type="submit">
+              <Button type="submit" className="submit">
                 Submit
               </Button>
             </div>

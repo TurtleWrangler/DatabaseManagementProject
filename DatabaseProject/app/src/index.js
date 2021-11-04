@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from "react-router-dom";
 import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 ReactDOM.render(
   <React.StrictMode>
-    <LocalizationProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Router>
         <App />
       </Router>
