@@ -1,113 +1,200 @@
 import React from 'react';
 import '../App.css';
 import '../Register.css';
-import {Box, TextField, Button} from '@mui/material';
-// import axios from 'axios';
+import {Box, TextField, Button, Select, MenuItem, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
+import axios from 'axios';
 import { Route } from "react-router-dom";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { DatePicker } from '@mui/lab';
 
 class Register extends React.Component {
 
   constructor(props) {
       super(props);
       this.state = {
-        registerEmail: '',
-        registerPassword: '',
+        email: '',
+        password: '',
         firstName: '',
         lastName: '',
         occupation: '',
         address: '',
         phoneNumber: '',
         dateOfBirth: '',
-        dateOfHire: ''
+        dateOfHire: '',
+        department: '',
+        departments: [{"ID": "1234","Name": "test"}],
+        showPassword: false
       };
+  }
+
+  onDeptChange = (event) => {
+    this.setState({department: event.target.value});
+  }
+
+  togglePasswordVisibility = () => {
+    this.setState((prevState) => {return({showPassword: !prevState.showPassword})});
+  }
+
+  handleRegisterSubmit = () => {
+    axios(
+      "http://localhost:38621/register",
+      {
+        method: 'post',
+        data: {
+          Email: this.state.email,
+          Password: this.state.password,
+          FirstName: this.state.firstName,
+          LastName: this.state.lastName,
+          Occupation: this.state.occupation,
+          Address: this.state.address,
+          PhoneNumber: this.state.phoneNumber,
+          DateOfBirth: this.state.dateOfBirth,
+          DateOfHire: this.state.dateOfHire,
+          DeptID: this.state.department
+        },
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            mode: 'no-cors'
+          }
+        }).then((data) => {
+        //this.setState({departments: data.data});
+      }
+    );
+  }
+
+  componentDidMount = () => {
+    axios(
+      "http://localhost:38621/department",
+      {
+        method: 'GET',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            mode: 'no-cors'
+          }
+        }).then((data) => {
+        this.setState({departments: data.data});
+      }
+    );
   }
 
   render() {
       return(
         <Route exact path="/register">
+          <Typography variant="h2" component="div" gutterBottom className='heading'>
+            Registration
+          </Typography>
           <Box
+            noValidation
             component="form"
             sx={{
               '& .MuiTextField-root': { m: 1, width: '25ch' },
             }}
-            noValidate
-            autoComplete="off"
             onSubmit={this.handleRegisterSubmit}
           >
             <div className='form-container'>
               <TextField
                 required
-                id="outlined-required"
-                label="Required Email"
+                id="outlined-email-required"
+                label="Email"
                 placeholder="Email"
-                value={this.state.registerEmail}
-                onInput={ e => this.setState({registerEmail: e.target.value})}
+                value={this.state.email}
+                onInput={ e => this.setState({email: e.target.value})}
               />
+              <FormControl sx={{ m: 1, width: '25ch' }}>
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={this.state.showPassword ? 'text' : 'password'}
+                  value={this.state.password}
+                  onInput={e => this.setState({password: e.target.value})}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={this.togglePasswordVisibility}
+                        edge="end"
+                      >
+                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
               <TextField
                 required
-                id="outlined-required"
-                label="Required Password"
-                placeholder="Password"
-                value={this.state.registerPassword}
-                onInput={ e => this.setState({registerPassword: e.target.value}) }
-              />
-              <TextField
-                required
-                id="outlined-required"
-                label="Required First Name"
+                id="outlined-firstname-required"
+                label="First Name"
                 placeholder="First Name"
                 value={this.state.firstName}
                 onInput={ e => this.setState({firstName: e.target.value}) }
               />
               <TextField
                 required
-                id="outlined-required"
-                label="Required Last Name"
+                id="outlined-lastname-required"
+                label="Last Name"
                 placeholder="Last Name"
                 value={this.state.lastName}
                 onInput={ e => this.setState({lastName: e.target.value}) }
               />
               <TextField
                 required
-                id="outlined-required"
-                label="Required Occupation"
+                id="outlined-occupation-required"
+                label="Occupation"
                 placeholder="Occupation"
                 value={this.state.occupation}
                 onInput={ e => this.setState({occupation: e.target.value}) }
               />
               <TextField
                 required
-                id="outlined-required"
-                label="Required Address"
+                id="outlined-address-required"
+                label="Address"
                 placeholder="Address"
                 value={this.state.address}
                 onInput={ e => this.setState({address: e.target.value}) }
               />
               <TextField
                 required
-                id="outlined-required"
-                label="Required Phone Number"
+                id="outlined-phonenumber-required"
+                label="Phone Number"
                 placeholder="Phone Number"
                 value={this.state.phoneNumber}
                 onInput={ e => this.setState({phoneNumber: e.target.value}) }
               />
-              <TextField
+              <DatePicker
                 required
-                id="outlined-required"
-                label="Required Date of Birth"
-                placeholder="Date of Birth"
+                id="outlined-dob-required"
+                label="Date of Birth"
                 value={this.state.dateOfBirth}
-                onInput={ e => this.setState({dateOfBirth: e.target.value}) }
+                onChange={ e => this.setState({dateOfBirth: e}) }
+                renderInput={(params) => <TextField {...params} error={false} />}
               />
-              <TextField
+              <DatePicker
                 required
-                id="outlined-required"
-                label="Required Date of Hire"
-                placeholder="Date of Hire"
+                id="outlined-doh-required"
+                label="Date of Hire"
                 value={this.state.dateOfHire}
-                onInput={ e => this.setState({dateOfHire: e.target.value}) }
+                onChange={ e => this.setState({dateOfHire: e}) }
+                renderInput={(params) => <TextField {...params} error={false} />}
               />
-              <Button type="submit">
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="label">Department *</InputLabel>
+                <Select
+                  required
+                  labelId="label"
+                  label="Department *"
+                  id="outlined-department-required"
+                  value={this.state.department}
+                  onChange={this.onDeptChange}
+                >
+                  {this.state.departments.map((option) => (
+                    <MenuItem key={option.ID} value={option.ID}>{option.Name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button type="submit" className="submit">
                 Submit
               </Button>
             </div>

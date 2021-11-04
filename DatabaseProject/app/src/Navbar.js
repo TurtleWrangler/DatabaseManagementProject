@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, CssBaseline, Typography, Button } from "@mui/material";
+import ArticleIcon from '@mui/icons-material/Article';
 import { makeStyles, withThemeCreator } from "@mui/styles";
 import { NavLink, Link } from "react-router-dom";
 
@@ -9,12 +10,17 @@ const useStyles = makeStyles((theme) => ({
   },
  logo: {
     flexGrow: "1",
-    cursor: "pointer"
+    cursor: "pointer",
+    textAlign: "left",
+    marginLeft: theme.spacing(5)
+  },
+  icon: {
+    marginRight: theme.spacing(2)
   },
   link: {
     textDecoration: "none",
     fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    marginLeft: theme.spacing(10),
     color: "white",
     "&:hover": {
       color: "yellow",
@@ -24,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   active: {
     textDecoration: "none",
     fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    marginLeft: theme.spacing(10),
     borderBottom: "1px solid white"
   }
 }));
@@ -37,7 +43,8 @@ function Navbar() {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-          TMS
+            <ArticleIcon className={classes.icon}/>
+            Time Management System
         </Typography>
           <div className={classes.navlinks}>
             <Link to="/" className={classes.link}>
