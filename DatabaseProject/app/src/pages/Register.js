@@ -22,7 +22,7 @@ class Register extends React.Component {
         dateOfBirth: '',
         dateOfHire: '',
         department: '',
-        departments: [{"ID": "1234","Name": "test"}],
+        departments: [{"ID": "0","Name": "FAILED TO POPULATE DEPTS"}],
         showPassword: false
       };
   }
