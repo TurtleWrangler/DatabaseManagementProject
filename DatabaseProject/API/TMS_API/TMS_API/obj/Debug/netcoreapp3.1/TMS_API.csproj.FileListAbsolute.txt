@@ -73,3 +73,15 @@ C:\Users\Derek\Documents\ZipsRepos\DBManagement\DatabaseManagementProject\Databa
 C:\Users\Derek\Documents\ZipsRepos\DBManagement\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.dll
 C:\Users\Derek\Documents\ZipsRepos\DBManagement\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.pdb
 C:\Users\Derek\Documents\ZipsRepos\DBManagement\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\obj\Debug\netcoreapp3.1\TMS_API.genruntimeconfig.cache
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.Streams.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\K4os.Hash.xxHash.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\MySql.Data.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\Ubiety.Dns.Core.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\ZstdNet.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+D:\Brandon\git\DatabaseManagementProject\DatabaseProject\API\TMS_API\TMS_API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
