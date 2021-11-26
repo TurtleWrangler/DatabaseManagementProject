@@ -13,7 +13,7 @@ namespace TMS_API.Controllers
     {
         private static MySqlConnection Connection = new MySqlConnection("server=173.90.136.43;user=brandon;database=tms;port=3306;password=P@ssw0rd");
         [HttpGet]
-        public string GetDepartments()
+        public IEnumerable<Department> GetDepartments()
         {
             Connection.Open();
             string query = "SELECT * FROM department";
@@ -30,7 +30,7 @@ namespace TMS_API.Controllers
             }
 
             Connection.Close();
-            return JsonSerializer.Serialize(depts);
+            return depts;
         }
     }
 }

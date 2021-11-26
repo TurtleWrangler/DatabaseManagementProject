@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/styles';
 import theme from './theme';
 // import axios from 'axios';
 import { Route, Link } from "react-router-dom";
+import { DataGrid } from '@mui/x-data-grid';
 
 class App extends React.Component {
 
@@ -58,8 +59,13 @@ class App extends React.Component {
           
           <Navbar />
           <Route exact path="/">
-            <Button><Link to="/sign-in">Sign-In</Link></Button>
-            <Button><Link to="/register">Register</Link></Button>
+            {/* <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+            /> */}
           </Route>
           
           <Register />

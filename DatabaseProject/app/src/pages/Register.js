@@ -37,7 +37,7 @@ class Register extends React.Component {
 
   handleRegisterSubmit = () => {
     axios(
-      "http://localhost:38621/register",
+      "http://localhost:5000/register",
       {
         method: 'post',
         data: {
@@ -65,7 +65,7 @@ class Register extends React.Component {
 
   componentDidMount = () => {
     axios(
-      "http://localhost:38621/department",
+      "http://localhost:5000/department",
       {
         method: 'GET',
         headers: {
@@ -190,7 +190,7 @@ class Register extends React.Component {
                   onChange={this.onDeptChange}
                 >
                   {this.state.departments.map((option) => (
-                    <MenuItem key={option.ID} value={option.ID}>{option.Name}</MenuItem>
+                    <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
