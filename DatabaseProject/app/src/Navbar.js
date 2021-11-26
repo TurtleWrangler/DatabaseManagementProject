@@ -1,7 +1,7 @@
 import React from "react";
-import { AppBar, Toolbar, CssBaseline, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, CssBaseline, Typography } from "@mui/material";
 import ArticleIcon from '@mui/icons-material/Article';
-import { makeStyles, withThemeCreator } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import { NavLink, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +35,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
+  
+  //Only display sign in and register if not logged in
+  if(!props.isLoggedIn) {
+    return (
+      <AppBar position="static">
+        <CssBaseline />
+        <Toolbar>
+          <Typography variant="h4" className={classes.logo}>
+              <ArticleIcon className={classes.icon}/>
+              Time Management System
+          </Typography>
+            <div className={classes.navlinks}>
+              <NavLink to="/sign-in" activeClassName={classes.active} className={classes.link}>
+                  Sign-In
+              </NavLink>
+              <NavLink to="/register" activeClassName={classes.active} className={classes.link}>
+                  Register
+              </NavLink>
+            </div>
+        </Toolbar>
+      </AppBar>
+    );
+  }
 
   return (
     <AppBar position="static">
