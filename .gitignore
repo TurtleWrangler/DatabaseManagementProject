@@ -62,8 +62,9 @@ BenchmarkDotNet.Artifacts/
 # .NET Core
 **/project.lock.json
 **/project.fragment.lock.json
-
+**/package-lock.json
 artifacts/
+//
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -392,6 +393,8 @@ FodyWeavers.xsd
 DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.runtimeconfig.dev.json
 DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.pdb
 DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.dll
+DatabaseProject/API/TMS_API/TMS_API/bin/Release/*
+DatabaseProject/API/TMS_API/TMS_API/bin/Debug/*
 DatabaseProject/API/TMS_API/TMS_API/bin/Debug/netcoreapp3.1/TMS_API.runtimeconfig.dev.json
 DatabaseProject/API/TMS_API/.vs/TMS_API/v16/.suo
 DatabaseProject/API/TMS_API/.vs/TMS_API/config/applicationhost.config
