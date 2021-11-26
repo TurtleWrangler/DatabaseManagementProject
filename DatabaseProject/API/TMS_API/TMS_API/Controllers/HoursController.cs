@@ -31,13 +31,14 @@ namespace TMS_API.Controllers
         }
 
         [HttpPut]
-        public void HoursUpdate(TimeEntry timeEntry)
+        public TimeEntry HoursUpdate(TimeEntry timeEntry)
         {
             Connection.Open();
             string query = "UPDATE time_entry SET hours_worked=" + timeEntry.HoursWorked + ", comments='" + timeEntry.Comments + "' WHERE employee_id='" + timeEntry.EmployeeID + "'";
             MySqlCommand cmd = new MySqlCommand(query, Connection);
             cmd.ExecuteNonQuery();
             Connection.Close();
+            return timeEntry;
         }
 
         [HttpDelete]

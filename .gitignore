@@ -62,8 +62,9 @@ BenchmarkDotNet.Artifacts/
 # .NET Core
 **/project.lock.json
 **/project.fragment.lock.json
-
+**/package-lock.json
 artifacts/
+//
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -389,3 +390,30 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.runtimeconfig.dev.json
+DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.pdb
+DatabaseProject/API/TMS_API/TMS_API/bin/Release/netcoreapp3.1/TMS_API.dll
+DatabaseProject/API/TMS_API/TMS_API/bin/Release/*
+DatabaseProject/API/TMS_API/TMS_API/bin/Debug/*
+DatabaseProject/API/TMS_API/TMS_API/bin/Debug/netcoreapp3.1/TMS_API.runtimeconfig.dev.json
+DatabaseProject/API/TMS_API/.vs/TMS_API/v16/.suo
+DatabaseProject/API/TMS_API/.vs/TMS_API/config/applicationhost.config
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.assets.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.csproj.AssemblyReference.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.csproj.CoreCompileInputs.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.csproj.FileListAbsolute.txt
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.dll
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.genruntimeconfig.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Debug/netcoreapp3.1/TMS_API.pdb
+DatabaseProject/API/TMS_API/TMS_API/obj/project.assets.json
+DatabaseProject/API/TMS_API/TMS_API/obj/project.nuget.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.assets.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.csproj.FileListAbsolute.txt
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.csproj.CoreCompileInputs.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.dll
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.GeneratedMSBuildEditorConfig.editorconfig
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.genruntimeconfig.cache
+DatabaseProject/API/TMS_API/TMS_API/obj/Release/netcoreapp3.1/TMS_API.pdb
+DatabaseProject/API/TMS_API/TMS_API/obj/TMS_API.csproj.nuget.dgspec.json
+DatabaseProject/API/TMS_API/TMS_API/obj/TMS_API.csproj.nuget.g.props
+DatabaseProject/API/TMS_API/TMS_API/TMS_API.csproj.user
