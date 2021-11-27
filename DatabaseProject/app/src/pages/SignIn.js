@@ -1,7 +1,8 @@
 import React from 'react';
 import '../App.css';
-import {Box, TextField, Button} from '@mui/material';
-// import axios from 'axios';
+import {Box, TextField, Button, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class SignIn extends React.Component {
@@ -14,13 +15,33 @@ class SignIn extends React.Component {
         };
     }
 
-    handleLogInSubmit = () => {
-        
+    handleLogInSubmit = e => {
+        e.preventDefault(); //Call prevent default to avoid reloading page on submit.
+        axios(
+            "http://localhost:5000/Login",
+            {
+              method: 'post',
+              data: {
+                Username: this.state.email,
+                Password: this.state.password
+              },
+              headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Content-Type': 'application/json',
+                  mode: 'no-cors'
+                }
+              }).then((data) => {
+                this.props.setToken(data.data.token);
+            }
+          );
     }
 
     render() {
         return(
             <Route exact path="/sign-in">
+                <Typography variant="h2" component="div" gutterBottom className='heading'>
+                    Welcome Back!
+                </Typography>
                 <Box
                 component="form"
                 sx={{
@@ -34,19 +55,32 @@ class SignIn extends React.Component {
                         <TextField
                         required
                         id="outlined-required"
-                        label="Required Email"
+                        label="Email"
                         placeholder="Email"
                         value={this.state.email}
                         onInput={ e => this.setState({email: e.target.value})}
                         />
-                        <TextField
-                        required
-                        id="outlined-required"
-                        label="Required Password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onInput={ e => this.setState({password: e.target.value})}
-                        />
+                        <FormControl sx={{ m: 1, width: '25ch' }}>
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-password"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                value={this.state.password}
+                                onInput={e => this.setState({password: e.target.value})}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={this.togglePasswordVisibility}
+                                        edge="end"
+                                    >
+                                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Password"
+                            />
+                        </FormControl>
                     </div>
                     <Button type="submit">
                         Submit

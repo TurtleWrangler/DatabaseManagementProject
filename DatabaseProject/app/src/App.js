@@ -42,6 +42,10 @@ class App extends React.Component {
     console.log("test");
   }
 
+  setToken = newToken => {
+    this.setState({token: newToken});
+  }
+
   render() {
     if(!this.state.token) {
       return (
@@ -49,7 +53,7 @@ class App extends React.Component {
           <CssBaseline />
           <div className="App">
             <Navbar isLoggedIn={false}/>
-            <SignIn />
+            <SignIn setToken={this.setToken}/>
             <Register />
           </div>
         </ThemeProvider>
@@ -73,7 +77,7 @@ class App extends React.Component {
           </Route>
           
           <Register />
-          <SignIn />
+          <SignIn setToken={this.setToken}/>
           <Route exact path="/timecard">
             
             <Box

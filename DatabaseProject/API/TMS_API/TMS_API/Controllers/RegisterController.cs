@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using TMS_API.Utilities;
 
 namespace TMS_API.Controllers
 {
@@ -42,7 +43,7 @@ namespace TMS_API.Controllers
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "INSERT INTO login_information VALUES(@email, @id, @password, @is_manager)";
-                cmd.Parameters.Add("@password", MySqlDbType.VarChar, 255).Value = employee.Password;
+                cmd.Parameters.Add("@password", MySqlDbType.VarChar, 255).Value = PasswordHashing.Hash(employee.Password);
                 cmd.Parameters.Add("@is_manager", MySqlDbType.Int16, 1).Value = 0;
                 cmd.ExecuteNonQuery();
 
