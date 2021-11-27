@@ -25,7 +25,6 @@ namespace TMS_API.Controllers
 
             while (rdr.Read())
             {
-                Console.WriteLine(rdr.GetString(1));
                 depts.Add(new Department(rdr.GetString(0), rdr.GetString(1)));
             }
 

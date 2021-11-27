@@ -27,18 +27,9 @@ class App extends React.Component {
       dateOfBirth: '',
       dateOfHire: '',
       hoursWorked: '',
-      comments: ''
+      comments: '',
+      token: ''
     };
-  }
-
-  handleLogInSubmit = (event) => {
-    event.preventDefault();
-    console.log( 'Email:', this.state.email, 'Password: ', this.state.password);
-  }
-
-  handleRegisterSubmit = (event) => {
-    event.preventDefault();
-    console.log( 'Email:', this.state.email, 'Password: ', this.state.password, 'First Name: ', this.state.firstName); 
   }
 
   handleHoursSubmitted = (event) => {
@@ -51,13 +42,30 @@ class App extends React.Component {
     console.log("test");
   }
 
+  setToken = newToken => {
+    this.setState({token: newToken});
+  }
+
   render() {
+    if(!this.state.token) {
+      return (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="App">
+            <Navbar isLoggedIn={false}/>
+            <SignIn setToken={this.setToken}/>
+            <Register />
+          </div>
+        </ThemeProvider>
+        
+      )
+    }
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="App">
           
-          <Navbar />
+          <Navbar isLoggedIn={true}/>
           <Route exact path="/">
             {/* <DataGrid
               rows={rows}
@@ -69,7 +77,7 @@ class App extends React.Component {
           </Route>
           
           <Register />
-          <SignIn />
+          <SignIn setToken={this.setToken}/>
           <Route exact path="/timecard">
             
             <Box

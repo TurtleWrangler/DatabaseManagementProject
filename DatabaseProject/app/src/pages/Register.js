@@ -35,7 +35,8 @@ class Register extends React.Component {
     this.setState((prevState) => {return({showPassword: !prevState.showPassword})});
   }
 
-  handleRegisterSubmit = () => {
+  handleRegisterSubmit = e => {
+    e.preventDefault();
     axios(
       "http://localhost:5000/register",
       {
@@ -53,13 +54,11 @@ class Register extends React.Component {
           DeptID: this.state.department
         },
         headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-            mode: 'no-cors'
-          }
-        }).then((data) => {
-        //this.setState({departments: data.data});
-      }
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          mode: 'no-cors'
+        }
+      } 
     );
   }
 
