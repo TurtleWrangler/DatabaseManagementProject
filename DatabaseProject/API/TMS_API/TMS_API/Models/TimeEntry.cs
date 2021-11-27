@@ -4,6 +4,15 @@ namespace TMS_API
 {
     public class TimeEntry
     {
+        internal TimeEntry(string id, DateTime date, int hoursWorked, string comments, DateTime submissionTime, DateTime weekStartDate)
+        {
+            EmployeeID = id;
+            Date = date;
+            HoursWorked = hoursWorked;
+            Comments = comments;
+            SubmissionTime = submissionTime;
+            WeekStartDate = weekStartDate;
+        }
         public string EmployeeID { get; set; }
 
         public DateTime Date { get; set; }
