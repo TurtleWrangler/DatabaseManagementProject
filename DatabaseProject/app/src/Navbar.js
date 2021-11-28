@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function Navbar(props) {
   const classes = useStyles();
   
-  //Only display sign in and register if not logged in
+  // display only sign in and register if not logged in
   if(!props.isLoggedIn) {
     return (
       <AppBar position="static">
@@ -78,9 +78,6 @@ function Navbar(props) {
             </NavLink>
             <NavLink to="/timecard" activeClassName={classes.active} className={classes.link}>
                 Timecard
-            </NavLink>
-            <NavLink to="/register" activeClassName={classes.active} className={classes.link}>
-                Register
             </NavLink>
           </div>
       </Toolbar>
