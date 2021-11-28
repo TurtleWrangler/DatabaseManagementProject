@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import { DatePicker } from '@mui/lab';
 
-class SignIn extends React.Component {
+class Timecard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class SignIn extends React.Component {
 
         this.columns = [
             { 
-                field: 'id', 
+                field: 'id',
                 headerName: 'ID', 
                 width: 100 
             },
@@ -142,6 +142,7 @@ class SignIn extends React.Component {
                 </Box>
                 <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
+                    disableColumnFilter
                     rows={this.state.rows}
                     columns={this.columns}
                     pageSize={5}
@@ -154,4 +155,4 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+export default Timecard;
