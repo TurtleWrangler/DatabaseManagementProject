@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './styles/App.css';
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
 import Timecard from './pages/Timecard';

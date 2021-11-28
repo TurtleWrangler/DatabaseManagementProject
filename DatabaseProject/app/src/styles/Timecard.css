@@ -1,0 +1,9 @@
+.timecard-inputs {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+}
+
+.week {
+    grid-column: span 2;
+}
