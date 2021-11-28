@@ -16,9 +16,32 @@ namespace TMS_API.Controllers
         [HttpGet]
         public IEnumerable<TimeEntry> GetHours()
         {
+            Console.WriteLine("WRONG");
             Connection.Open();
             string query = "SELECT * FROM time_entry";
             MySqlCommand cmd = new MySqlCommand(query, Connection);
+
+            using MySqlDataReader rdr = cmd.ExecuteReader();
+
+            List<TimeEntry> timeEntry = new List<TimeEntry>();
+
+            while (rdr.Read())
+            {
+                timeEntry.Add(new TimeEntry(rdr.GetString(0), rdr.GetDateTime(1), rdr.GetInt32(2), rdr.GetString(3), rdr.GetDateTime(4), rdr.GetDateTime(5)));
+            }
+
+            Connection.Close();
+            return timeEntry;
+        }
+        [Route("{startOfWeek}")]
+        [HttpGet]
+        public IEnumerable<TimeEntry> GetHoursByWeek(string startOfWeek)
+        {
+            Console.WriteLine(startOfWeek);
+            Connection.Open();
+            string query = "SELECT * FROM time_entry WHERE week_start_date = @startOfWeek";
+            MySqlCommand cmd = new MySqlCommand(query, Connection);
+            cmd.Parameters.Add("@startOfWeek", MySqlDbType.Date, 45).Value = startOfWeek;
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 

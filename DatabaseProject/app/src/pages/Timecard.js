@@ -5,15 +5,16 @@ import axios from 'axios';
 import { Route } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import { DatePicker } from '@mui/lab';
+import { format, isMonday, previousMonday, add } from 'date-fns';
 
-class SignIn extends React.Component {
+class Timecard extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             hoursWorked: '',
             comments: '',
-            startOfWeek: '',
+            startOfWeek: new Date(),
             rows: [],
             timeEntry: [{"ID": "0","Date": "FAILED TO POPULATE TIME ENTRIES","Hours Worked": "FAILED TO POPULATE TIME ENTRIES","Comments": "FAILED TO POPULATE TIME ENTRIES","Submission Time": "FAILED TO POPULATE TIME ENTRIES","Week Start Date": "FAILED TO POPULATE TIME ENTRIES"}]
         };
@@ -52,7 +53,7 @@ class SignIn extends React.Component {
             {
                 field: 'week_start_date',
                 headerName: 'Week Start Date',
-                width: 200,
+                width: 200
             }
         ]
 
@@ -60,6 +61,10 @@ class SignIn extends React.Component {
     }
 
     componentDidMount = () => {
+        this.setState(() => {
+            const today = new Date();
+            return {startOfWeek: isMonday(today) ? today : new Date(previousMonday(today))};
+        });
         axios(
             "http://localhost:5000/hours",
             {
@@ -89,10 +94,26 @@ class SignIn extends React.Component {
           {
             method: 'post',
             data: {
-              HoursWorked: this.state.hoursWorked,
-              Comments: this.state.comments
+                HoursWorked: this.state.hoursWorked,
+                Comments: this.state.comments
             }
           } 
+        );
+    }
+    
+    getSelectedWeekTime = () => {
+        axios(
+            `http://localhost:5000/hours/${format(new Date(this.state.startOfWeek), "yyyy-MM-dd")}`,
+            {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                mode: 'no-cors'
+                }
+            }).then((data) => {
+
+            }
         );
     }
 
@@ -112,24 +133,61 @@ class SignIn extends React.Component {
                     onSubmit={this.handleHoursSubmitted}
                 >
                     <DatePicker
-                        required
-                        id="selected-week"
                         label="Week"
                         value={this.state.startOfWeek}
-                        onChange={ e => this.setState({startOfWeek: e}) }
+                        onChange={ e => this.setState({startOfWeek: isMonday(e) ? e : new Date(previousMonday(e))}, this.getSelectedWeekTime) }
                         renderInput={(params) => <TextField {...params} error={false} />}
                     />
                     <TextField
-                        required
-                        id="outlined-required"
-                        label={`Monday ${this.state.startOfWeek+1}`}
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(this.state.startOfWeek,"eeee, MM/dd/yy") : ''}
                         placeholder="Hours Worked"
                         value={this.state.hoursWorked}
                         onInput={ e => this.setState({hoursWorked: e.target.value}) }
                     />
                     <TextField
-                        required
-                        id="outlined-required"
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':1}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':2}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':3}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':4}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':5}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
+                        style = {{width: 180}}
+                        label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':6}),"eeee, MM/dd/yy") : ''}
+                        placeholder="Hours Worked"
+                        value={this.state.hoursWorked}
+                        onInput={ e => this.setState({hoursWorked: e.target.value}) }
+                    />
+                    <TextField
                         label="Comments"
                         placeholder="Comments"
                         value={this.state.comments}
@@ -137,7 +195,10 @@ class SignIn extends React.Component {
                     />
                     <br/>
                     <Button type="submit" className="submit">
-                        Submit
+                        Save
+                    </Button>
+                    <Button  className="undo">
+                        Undo
                     </Button>
                 </Box>
                 <div style={{ height: 400, width: '100%' }}>
@@ -154,4 +215,4 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+export default Timecard;
