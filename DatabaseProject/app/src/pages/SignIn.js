@@ -3,7 +3,7 @@ import '../App.css';
 import {Box, TextField, Button, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 class SignIn extends React.Component {
 
@@ -11,7 +11,8 @@ class SignIn extends React.Component {
         super(props);
         this.state = {
           email: '',
-          password: ''
+          password: '',
+          showPassword: false
         };
     }
 
@@ -33,7 +34,11 @@ class SignIn extends React.Component {
               }).then((data) => {
                 this.props.setToken(data.data.token);
             }
-          );
+        );
+    }
+
+    togglePasswordVisibility = () => {
+        this.setState((prevState) => {return({showPassword: !prevState.showPassword})});
     }
 
     render() {
