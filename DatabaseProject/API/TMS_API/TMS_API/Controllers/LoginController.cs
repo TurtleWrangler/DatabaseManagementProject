@@ -23,8 +23,6 @@ namespace TMS_API.Controllers
 
             cmd.ExecuteNonQuery();
 
-            
-
             using MySqlDataReader rdr = cmd.ExecuteReader();
             LoginInformation dbLoginInfo = null;
 
@@ -43,9 +41,9 @@ namespace TMS_API.Controllers
 
             if (PasswordHashing.Compare(request.Password, dbLoginInfo.Password))
             {
-                Console.WriteLine("bad password");
+                string token = TokenHelper.generateJwtToken(dbLoginInfo.EmployeeID);
                 Connection.Close();
-                return new LoginResponse("Success!", dbLoginInfo.Username, dbLoginInfo.EmployeeID, dbLoginInfo.IsManager, "TestToken");
+                return new LoginResponse("Success!", dbLoginInfo.Username, dbLoginInfo.EmployeeID, dbLoginInfo.IsManager, token);
             }
 
             Connection.Close();
