@@ -5,6 +5,7 @@ using System.Linq;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using TMS_API.Utilities;
+using TMS_API.Services;
 
 namespace TMS_API.Controllers
 {
@@ -12,22 +13,22 @@ namespace TMS_API.Controllers
     [Route("[controller]")]
     public class RegisterController : ControllerBase
     {
-        private static MySqlConnection Connection = new MySqlConnection("server=173.90.136.43;user=brandon;database=tms;port=3306;password=P@ssw0rd");
+        ConnectionService _connectionService = new ConnectionService();
 
         [HttpPost]
         public void Register(Employee employee)
         {
-            Connection.Open();
+            _connectionService.Connect();
 
             try
             {
                 MySqlTransaction myTrans;
-                myTrans = Connection.BeginTransaction();
+                myTrans = _connectionService.Connection.BeginTransaction();
 
                 employee.ID = Guid.NewGuid().ToString();
 
                 string query = "INSERT INTO employee VALUES(@id, @dept_id, @name_first, @name_last, @occupation, @email, @address, @phone_number, @date_of_birth, @date_of_hire, @date_of_dismissal)";
-                MySqlCommand cmd = new MySqlCommand(query, Connection, myTrans);
+                MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection, myTrans);
                 cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = employee.ID;
                 cmd.Parameters.Add("@dept_id", MySqlDbType.VarChar, 36).Value = employee.DeptID;
                 cmd.Parameters.Add("@name_first", MySqlDbType.VarChar, 20).Value = employee.FirstName;
@@ -54,10 +55,6 @@ namespace TMS_API.Controllers
                 Console.WriteLine("An exception of type " + ex.GetType() + " was encountered while inserting the data.");
                 Console.WriteLine("Neither record was written to database.");
                 Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                Connection.Close();
             }
         }
     }
