@@ -13,7 +13,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: 'DEBUG'
+      token: ''
     };
   }
 
@@ -41,7 +41,7 @@ class App extends React.Component {
         <div className="App">
           <Navbar isLoggedIn={true}/>          
           <SignIn setToken={this.setToken}/>
-          <Timecard />
+          <Timecard token={this.state.token}/>
         </div>
       </ThemeProvider>
     );

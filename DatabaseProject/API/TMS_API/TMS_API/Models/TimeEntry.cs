@@ -18,9 +18,9 @@ namespace TMS_API
 
         public DateTime Date { get; set; }
 
-        public int HoursWorked { get; set; }
+        public int? HoursWorked { get; set; }
 
-        public string Comments { get; set; }
+        public string? Comments { get; set; }
 
         public DateTime SubmissionTime { get; set; }
 

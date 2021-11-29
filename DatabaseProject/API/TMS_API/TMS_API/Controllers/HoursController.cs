@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using TMS_API.Attributes;
 
 namespace TMS_API.Controllers
 {
@@ -12,14 +13,17 @@ namespace TMS_API.Controllers
     public class HoursController : ControllerBase
     {
         private static MySqlConnection Connection = new MySqlConnection("server=173.90.136.43;user=brandon;database=tms;port=3306;password=P@ssw0rd");
-
+        
+        [Authorization]
         [HttpGet]
         public IEnumerable<TimeEntry> GetHours()
         {
-            Console.WriteLine("WRONG");
+            string userId = (string)HttpContext.Items["User"];
             Connection.Open();
-            string query = "SELECT * FROM time_entry";
+            string query = "SELECT * FROM time_entry WHERE employee_id = @id";
             MySqlCommand cmd = new MySqlCommand(query, Connection);
+
+            cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -33,15 +37,18 @@ namespace TMS_API.Controllers
             Connection.Close();
             return timeEntry;
         }
+
         [Route("{startOfWeek}")]
+        [Authorization]
         [HttpGet]
         public IEnumerable<TimeEntry> GetHoursByWeek(string startOfWeek)
         {
-            Console.WriteLine(startOfWeek);
+            string userId = (string)HttpContext.Items["User"];
             Connection.Open();
-            string query = "SELECT * FROM time_entry WHERE week_start_date = @startOfWeek";
+            string query = "SELECT * FROM time_entry WHERE week_start_date = @startOfWeek AND employee_id = @id";
             MySqlCommand cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.Add("@startOfWeek", MySqlDbType.Date, 45).Value = startOfWeek;
+            cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -57,14 +64,16 @@ namespace TMS_API.Controllers
         }
 
         [HttpPost]
+        [Authorization]
         public void Hours(TimeEntry[] timeEntries)
         {
+            string userId = (string)HttpContext.Items["User"];
             Connection.Open();
 
             string query = "INSERT IGNORE INTO timesheet VALUES(@week_start_date,@employee_id,0)";
             MySqlCommand cmd_timesheet = new MySqlCommand(query, Connection);
             cmd_timesheet.Parameters.Add("@week_start_date", MySqlDbType.DateTime).Value = timeEntries[0].WeekStartDate;
-            cmd_timesheet.Parameters.Add("@employee_id", MySqlDbType.VarChar, 36).Value = "62984939-89f0-41d3-ba0a-b19c313ea685";
+            cmd_timesheet.Parameters.Add("@employee_id", MySqlDbType.VarChar, 36).Value = userId;
             cmd_timesheet.ExecuteNonQuery();          
 
             MySqlTransaction myTrans;
@@ -75,9 +84,17 @@ namespace TMS_API.Controllers
             
             foreach (TimeEntry timeEntry in timeEntries)
             {
+                if(string.IsNullOrWhiteSpace(timeEntry.Comments) && timeEntry.HoursWorked == null)
+                {
+                    continue;
+                }
+                if(timeEntry.HoursWorked == null)
+                {
+                    timeEntry.HoursWorked = 0;
+                }
                 MySqlCommand cmd = new MySqlCommand(query, Connection, myTrans);
                 cmd.Parameters.Add("@week_start_date", MySqlDbType.DateTime).Value = timeEntries[0].WeekStartDate;
-                cmd.Parameters.Add("@employee_id", MySqlDbType.VarChar, 36).Value = "62984939-89f0-41d3-ba0a-b19c313ea645";
+                cmd.Parameters.Add("@employee_id", MySqlDbType.VarChar, 36).Value = userId;
                 cmd.Parameters.Add("@date", MySqlDbType.Date).Value = timeEntry.Date;
                 cmd.Parameters.Add("@hours_worked", MySqlDbType.Decimal).Value = timeEntry.HoursWorked;
                 cmd.Parameters.Add("@comments", MySqlDbType.Text).Value = timeEntry.Comments;
@@ -85,27 +102,6 @@ namespace TMS_API.Controllers
             }
 
             myTrans.Commit();
-            Connection.Close();
-        }
-
-        [HttpPut]
-        public TimeEntry HoursUpdate(TimeEntry timeEntry)
-        {
-            Connection.Open();
-            string query = "UPDATE time_entry SET hours_worked=" + timeEntry.HoursWorked + ", comments='" + timeEntry.Comments + "' WHERE employee_id='" + timeEntry.EmployeeID + "'";
-            MySqlCommand cmd = new MySqlCommand(query, Connection);
-            cmd.ExecuteNonQuery();
-            Connection.Close();
-            return timeEntry;
-        }
-
-        [HttpDelete]
-        public void HoursDelete(TimeEntry timeEntry)
-        {
-            Connection.Open();
-            string query = "DELETE FROM time_entry WHERE employee_id='" + timeEntry.EmployeeID + "'";
-            MySqlCommand cmd = new MySqlCommand(query, Connection);
-            cmd.ExecuteNonQuery();
             Connection.Close();
         }
     }
