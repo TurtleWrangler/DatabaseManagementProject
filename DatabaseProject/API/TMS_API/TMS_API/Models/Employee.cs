@@ -4,6 +4,13 @@ namespace TMS_API
 {
     public class Employee
     {
+        internal Employee(string firstName, string lastName, string occupation, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Occupation = occupation;
+            Email = email;
+        }
         public string ID { get; set; }
 
         public string DeptID { get; set; }

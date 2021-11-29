@@ -5,6 +5,7 @@ import {Box, TextField, Button, Typography} from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
 import { DatePicker } from '@mui/lab';
+// import { DataGrid } from '@mui/x-data-grid';
 import { format, isMonday, previousMonday, add } from 'date-fns';
 
 class Timecard extends React.Component {
@@ -263,7 +264,7 @@ class Timecard extends React.Component {
                         </span>
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(this.state.startOfWeek,"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(this.state.startOfWeek,"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.monHoursWorked}
                             onInput={ e => this.setState({monHoursWorked: e.target.value}) }
@@ -276,7 +277,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':1}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':1}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.tueHoursWorked}
                             onInput={ e => this.setState({tueHoursWorked: e.target.value}) }
@@ -289,7 +290,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':2}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':2}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.wedHoursWorked}
                             onInput={ e => this.setState({wedHoursWorked: e.target.value}) }
@@ -302,7 +303,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':3}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':3}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.thurHoursWorked}
                             onInput={ e => this.setState({thurHoursWorked: e.target.value}) }
@@ -315,7 +316,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':4}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':4}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.friHoursWorked}
                             onInput={ e => this.setState({friHoursWorked: e.target.value}) }
@@ -328,7 +329,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':5}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':5}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.satHoursWorked}
                             onInput={ e => this.setState({satHoursWorked: e.target.value}) }
@@ -341,7 +342,7 @@ class Timecard extends React.Component {
                         />
                         <TextField
                             style = {{width: 180}}
-                            label={this.state.startOfWeek != '' ? format(add(this.state.startOfWeek,{'days':6}),"eeee, MM/dd/yy") : ''}
+                            label={this.state.startOfWeek !== '' ? format(add(this.state.startOfWeek,{'days':6}),"eeee, MM/dd/yy") : ''}
                             placeholder="Hours Worked"
                             value={this.state.sunHoursWorked}
                             onInput={ e => this.setState({sunHoursWorked: e.target.value}) }
