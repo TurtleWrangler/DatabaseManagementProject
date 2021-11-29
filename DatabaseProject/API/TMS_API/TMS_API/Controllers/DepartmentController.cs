@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using MySql.Data.MySqlClient;
+using TMS_API.Services;
 
 namespace TMS_API.Controllers
 {
@@ -11,13 +12,14 @@ namespace TMS_API.Controllers
     [Route("[controller]")]
     public class DepartmentController : ControllerBase
     {
-        private static MySqlConnection Connection = new MySqlConnection("server=173.90.136.43;user=brandon;database=tms;port=3306;password=P@ssw0rd");
+        private ConnectionService _connectionService = new ConnectionService();
+
         [HttpGet]
         public IEnumerable<Department> GetDepartments()
         {
-            Connection.Open();
+            _connectionService.Connect();
             string query = "SELECT * FROM department";
-            MySqlCommand cmd = new MySqlCommand(query, Connection);
+            MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -28,7 +30,6 @@ namespace TMS_API.Controllers
                 depts.Add(new Department(rdr.GetString(0), rdr.GetString(1)));
             }
 
-            Connection.Close();
             return depts;
         }
     }

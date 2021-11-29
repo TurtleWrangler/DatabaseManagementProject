@@ -157,8 +157,8 @@ class Timecard extends React.Component {
                 ]
                 
             }
-        );
-        this.getSelectedWeekTime();
+        ).then(this.getSelectedWeekTime);
+        ;
     }
     
     getSelectedWeekTime = () => {
