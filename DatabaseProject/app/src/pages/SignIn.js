@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../styles/App.css';
 import {Box, TextField, Button, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';

@@ -1,6 +1,6 @@
 import React from 'react';
-import '../App.css';
-import '../Register.css';
+import '../styles/App.css';
+import '../styles/Register.css';
 import {Box, TextField, Button, Select, MenuItem, InputLabel, FormControl, InputAdornment, IconButton, OutlinedInput, Typography} from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";

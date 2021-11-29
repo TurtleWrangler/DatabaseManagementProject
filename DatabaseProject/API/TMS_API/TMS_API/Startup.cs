@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMS_API.Utilities;
 
 namespace TMS_API
 {
@@ -24,7 +25,7 @@ namespace TMS_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -47,10 +48,15 @@ namespace TMS_API
 
             app.UseAuthorization();
 
+            app.UseAuthorization();
+            app.UseMiddleware<HttpHelper>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            //Authorization Middleware
         }
     }
 }
