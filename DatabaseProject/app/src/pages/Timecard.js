@@ -102,6 +102,31 @@ class Timecard extends React.Component {
 
     handleHoursSubmitted = (event) => {
         event.preventDefault();
+
+        if(this.state.monHoursWorked <= 0 || this.state.tueHoursWorked <= 0 || this.state.wedHoursWorked <= 0 || 
+           this.state.thurHoursWorked <= 0 || this.state.friHoursWorked <= 0 || this.state.satHoursWorked <= 0 ||
+           this.state.sunHoursWorked <= 0)
+        {
+            alert("Invalid Hours Worked. Please ensure all hours are above 0.");
+            return;
+        }
+
+        if(this.state.monHoursWorked % 1 !== 0 || this.state.tueHoursWorked % 1 !== 0 || this.state.wedHoursWorked % 1 !== 0 || 
+           this.state.thurHoursWorked % 1 !== 0 || this.state.friHoursWorked % 1 !== 0 || this.state.satHoursWorked % 1 !== 0 ||
+           this.state.sunHoursWorked % 1 !== 0)
+        {
+            alert("Invalid Hours Worked. Please ensure all hours are integers.");
+            return;
+        }
+
+        if(this.state.monHoursWorked >= 24 || this.state.tueHoursWorked >= 24 || this.state.wedHoursWorked >= 24 || 
+           this.state.thurHoursWorked >= 24 || this.state.friHoursWorked >= 24 || this.state.satHoursWorked >= 24 ||
+           this.state.sunHoursWorked >= 24)
+        {
+            alert("Invalid Hours Worked. Please ensure all hours are below 24.");
+            return;
+        }
+
         axios(
             "http://localhost:5000/hours",
             {
