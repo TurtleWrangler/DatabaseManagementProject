@@ -1,11 +1,12 @@
 import React from 'react';
 import '../styles/App.css';
 // import '../styles/Timecard.css';
-import { Typography } from '@mui/material';
+import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from "material-ui-search-bar";
+import { DatePicker } from '@mui/lab';
+import { format, isMonday, previousMonday } from 'date-fns';
 
 class History extends React.Component {
 
@@ -13,6 +14,7 @@ class History extends React.Component {
         super(props);
         this.state = {
             value: '',
+            startOfDays: '',
             rows: []
         };
 
@@ -23,8 +25,13 @@ class History extends React.Component {
                 width: 100 
             },
             {
-                field: 'employee_id',
-                headerName: 'Employee ID',
+                field: 'firstName',
+                headerName: 'First Name',
+                width: 200,
+            },
+            {
+                field: 'lastName',
+                headerName: 'Last Name',
                 width: 200,
             },
             {
@@ -33,7 +40,7 @@ class History extends React.Component {
                 width: 200,
             },
             {
-                field: 'hours_worked',
+                field: 'hoursWorked',
                 headerName: 'Hours Worked',
                 width: 200,
             },
@@ -43,12 +50,12 @@ class History extends React.Component {
                 width: 200,
             },
             {
-                field: 'submission_time',
+                field: 'submissionTime',
                 headerName: 'Submission Time',
                 width: 200,
             },
             {
-                field: 'week_start_date',
+                field: 'weekStartDate',
                 headerName: 'Week Start Date',
                 width: 200
             }
@@ -58,51 +65,63 @@ class History extends React.Component {
     }
 
     componentDidMount = () => {
-        // this.setState(() => {
-        //     const today = new Date();
-        //     return {startOfWeek: isMonday(today) ? today : new Date(previousMonday(today))};
-        // }, this.getSelectedWeekTime);
-        // axios(
-        //     "http://localhost:5000/hours",
-        //     {
-        //     method: 'GET',
-        //     headers: {
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Content-Type': 'application/json',
-        //         'Authorization': this.props.token,
-        //         mode: 'no-cors'
-        //         }
-        //     }).then((data) => {
-        //         data.data.map(row => {
-        //             row.id = this.currentRowId;
-        //             ++this.currentRowId;
-        //             return row;
-        //         });
-        //         this.setState({rows: data.data});
-        //     }
-        // );
+        this.setState(() => {
+            const today = new Date();
+            return {startOfWeek: isMonday(today) ? today : new Date(previousMonday(today))};
+        }, this.getSelectedWeekTime);
+        axios(
+            "http://localhost:5000/hours",
+            {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token,
+                mode: 'no-cors'
+                }
+            }).then((data) => {
+                data.data.map(row => {
+                    row.id = this.currentRowId;
+                    ++this.currentRowId;
+                    return row;
+                });
+                for(var i = 0; i < data.data.length; i++)
+                {
+                    data.data[i].date = format(new Date(data.data[i].date), "yyyy-MM-dd");
+                    data.data[i].submissionTime = format(new Date(data.data[i].submissionTime), "hh-mm aa");
+                    data.data[i].weekStartDate = format(new Date(data.data[i].weekStartDate), "yyyy-MM-dd");
+                }
+                this.setState({rows: data.data});
+            }
+        );
     }
 
-    searchCriteria = () => {
-        // axios(
-        //     `http://localhost:5000/hours/${this.state.value}`,
-        //     {
-        //     method: 'GET',
-        //     headers: {
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Content-Type': 'application/json',
-        //         'Authorization': this.props.token,
-        //         mode: 'no-cors'
-        //         }
-        //     }).then((data) => {
-        //         data.data.map(row => {
-        //             row.id = this.currentRowId;
-        //             ++this.currentRowId;
-        //             return row;
-        //         });
-        //         this.setState({rows: data.data});
-        //     }
-        // );
+    searchDate = () => {
+        axios(
+            `http://localhost:5000/hours/search/${format(new Date(this.state.startOfDays), "yyyy-MM-dd")}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.token,
+                    mode: 'no-cors'
+                }
+            }).then((data) => {
+                data.data.map(row => {
+                    row.id = this.currentRowId;
+                    ++this.currentRowId;
+                    return row;
+                });
+                for(var i = 0; i < data.data.length; i++)
+                {
+                    data.data[i].date = format(new Date(data.data[i].date), "yyyy-MM-dd");
+                    data.data[i].submissionTime = format(new Date(data.data[i].submissionTime), "hh-mm aa");
+                    data.data[i].weekStartDate = format(new Date(data.data[i].weekStartDate), "yyyy-MM-dd");
+                }
+                this.setState({rows: data.data});
+            }
+        );
     }
 
     render() {
@@ -111,20 +130,24 @@ class History extends React.Component {
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     History
                 </Typography>
-                <SearchBar
-                  value={this.state.value}
-                  onChange={(newValue) => this.setState({ value: newValue })}
-                //   onRequestSearch={() => this.searchCriteria()}
+                <DatePicker
+                    label="Search First Day"
+                    value={this.state.startOfDays}
+                    onChange={ e => this.setState({startOfDays: e}) }
+                    renderInput={(params) => <TextField {...params} error={false} />}
                 />
+                <Button type="submit" className="submit" onClick={() => { this.searchDate()}}>
+                    Search
+                </Button>
                 <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    disableColumnFilter
-                    rows={this.state.rows}
-                    columns={this.columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
+                    <DataGrid
+                        disableColumnFilter
+                        rows={this.state.rows}
+                        columns={this.columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        checkboxSelection
+                    />
                 </div>
             </Route>
         );

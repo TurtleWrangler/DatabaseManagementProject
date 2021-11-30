@@ -4,15 +4,15 @@ namespace TMS_API
 {
     public class EmployeeTimesheet
     {
-        internal EmployeeTimesheet(string firstName, string lastName, DateTime date, int hoursWorked, string comments, DateTime submissionTime, DateTime weekStartDate)
+        internal EmployeeTimesheet(string firstName, string lastName, DateTime date, int hoursWorked, string comments, DateTime weekStartDate, DateTime submissionTime)
         {
             FirstName = firstName;
             LastName = lastName;
             Date = date;
             HoursWorked = hoursWorked;
             Comments = comments;
-            SubmissionTime = submissionTime;
             WeekStartDate = weekStartDate;
+            SubmissionTime = submissionTime;
         }
         public string FirstName { get; set; }
 
