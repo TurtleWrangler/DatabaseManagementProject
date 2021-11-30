@@ -80,7 +80,7 @@ function Navbar(props) {
                 History
             </NavLink>
             <NavLink to="/user" activeClassName={classes.active} className={classes.link}>
-                User
+                Employees
             </NavLink>
           </div>
       </Toolbar>
