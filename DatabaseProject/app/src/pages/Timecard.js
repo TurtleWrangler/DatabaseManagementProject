@@ -28,50 +28,7 @@ class Timecard extends React.Component {
             friComments: '',
             satComments: '',
             sunComments: '',
-
-            rows: [],
-            timeEntry: [{"ID": "0","Date": "FAILED TO POPULATE TIME ENTRIES","Hours Worked": "FAILED TO POPULATE TIME ENTRIES","Comments": "FAILED TO POPULATE TIME ENTRIES","Submission Time": "FAILED TO POPULATE TIME ENTRIES","Week Start Date": "FAILED TO POPULATE TIME ENTRIES"}]
         };
-
-        this.columns = [
-            { 
-                field: 'id',
-                headerName: 'ID', 
-                width: 100 
-            },
-            {
-                field: 'employee_id',
-                headerName: 'Employee ID',
-                width: 200,
-            },
-            {
-                field: 'date',
-                headerName: 'Date',
-                width: 200,
-            },
-            {
-                field: 'hours_worked',
-                headerName: 'Hours Worked',
-                width: 200,
-            },
-            {
-                field: 'comments',
-                headerName: 'Comments',
-                width: 200,
-            },
-            {
-                field: 'submission_time',
-                headerName: 'Submission Time',
-                width: 200,
-            },
-            {
-                field: 'week_start_date',
-                headerName: 'Week Start Date',
-                width: 200
-            }
-        ]
-
-        this.currentRowId = 0;
     }
 
     componentDidMount = () => {
@@ -79,43 +36,16 @@ class Timecard extends React.Component {
             const today = new Date();
             return {startOfWeek: isMonday(today) ? today : new Date(previousMonday(today))};
         }, this.getSelectedWeekTime);
-        axios(
-            "http://localhost:5000/hours",
-            {
-            method: 'GET',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-                'Authorization': this.props.token,
-                mode: 'no-cors'
-                }
-            }).then((data) => {
-                data.data.map(row => {
-                    row.id = this.currentRowId;
-                    ++this.currentRowId;
-                    return row;
-                });
-                this.setState({rows: data.data});
-            }
-        );
     }
 
     handleHoursSubmitted = (event) => {
         event.preventDefault();
 
-        if(this.state.monHoursWorked <= 0 || this.state.tueHoursWorked <= 0 || this.state.wedHoursWorked <= 0 || 
-           this.state.thurHoursWorked <= 0 || this.state.friHoursWorked <= 0 || this.state.satHoursWorked <= 0 ||
-           this.state.sunHoursWorked <= 0)
+        if(this.state.monHoursWorked < 0 || this.state.tueHoursWorked < 0 || this.state.wedHoursWorked < 0 || 
+           this.state.thurHoursWorked < 0 || this.state.friHoursWorked < 0 || this.state.satHoursWorked < 0 ||
+           this.state.sunHoursWorked < 0)
         {
-            alert("Invalid Hours Worked. Please ensure all hours are above 0.");
-            return;
-        }
-
-        if(this.state.monHoursWorked % 1 !== 0 || this.state.tueHoursWorked % 1 !== 0 || this.state.wedHoursWorked % 1 !== 0 || 
-           this.state.thurHoursWorked % 1 !== 0 || this.state.friHoursWorked % 1 !== 0 || this.state.satHoursWorked % 1 !== 0 ||
-           this.state.sunHoursWorked % 1 !== 0)
-        {
-            alert("Invalid Hours Worked. Please ensure all hours are integers.");
+            alert("Invalid Hours Worked.");
             return;
         }
 
@@ -184,7 +114,6 @@ class Timecard extends React.Component {
                 
             }
         ).then(this.getSelectedWeekTime);
-        ;
     }
     
     getSelectedWeekTime = () => {
@@ -381,21 +310,8 @@ class Timecard extends React.Component {
                         <Button type="submit" className="submit">
                             Save
                         </Button>
-                        <Button  className="approval">
-                            Request Approval
-                        </Button>
                     </div>
                 </Box>
-                {/* <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    disableColumnFilter
-                    rows={this.state.rows}
-                    columns={this.columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
-                </div> */}
             </Route>
         );
     }
