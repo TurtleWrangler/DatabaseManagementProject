@@ -37,6 +37,128 @@ class Register extends React.Component {
 
   handleRegisterSubmit = e => {
     e.preventDefault();
+
+    var currentMonth, currentDay, currentYear, birthMonth, birthDay, birthYear, hiredMonth, hiredDay, hiredYear;
+    var today = new Date();
+    var selectedBirthDate = new Date(this.state.dateOfBirth);
+    var selectedHireDate = new Date(this.state.dateOfHire);
+
+    if(today.getMonth() === 12)
+    {
+      currentMonth = 1;
+    }
+    else
+    {
+      currentMonth = today.getMonth()+1;
+    }
+
+    if(selectedBirthDate.getMonth() === 12)
+    {
+      birthMonth = 1;
+    }
+    else
+    {
+      birthMonth = selectedBirthDate.getMonth()+1;
+    }
+
+    if(selectedHireDate.getMonth() === 12)
+    {
+      hiredMonth = 1;
+    }
+    else
+    {
+      hiredMonth = selectedHireDate.getMonth()+1;
+    }
+
+    currentDay = today.getDate();
+    currentYear = today.getFullYear();
+
+    birthDay = selectedBirthDate.getDate();
+    birthYear = selectedBirthDate.getFullYear();
+
+    hiredDay = selectedHireDate.getDate();
+    hiredYear = selectedHireDate.getFullYear();
+
+    if(!this.state.email.includes("@") || !this.state.email.includes("."))
+    {
+      alert("Invalid Email");
+      return;
+    }
+    else if(this.state.password==="")
+    {
+      alert("Invalid password");
+      return;
+    }
+    else if(!/^[a-zA-Z]+$/.test(this.state.firstName))
+    {
+      alert("Invalid First Name");
+      return;
+    }
+    else if(!/^[a-zA-Z]+$/.test(this.state.lastName))
+    {
+      alert("Invalid Last Name");
+      return;
+    }
+    else if(!/^[a-zA-Z]+$/.test(this.state.occupation))
+    {
+      alert("Invalid Occupation");
+      return;
+    }
+    else if(!/^[a-zA-Z0-9. ]+$/.test(this.state.address))
+    {
+      alert("Invalid Address");
+      return;
+    }
+    else if(!/^[0-9]+$/.test(this.state.phoneNumber))
+    {
+      alert("Invalid Phone Number");
+      return;
+    }
+
+    if(birthYear > currentYear)
+    {
+      alert("Invalid Birth Date");
+      return;
+    }
+    else if(birthYear <= currentYear)
+    {
+      if(birthMonth > currentMonth)
+      {
+        alert("Invalid Birth Date");
+        return;
+      }
+      else if(birthMonth <= currentMonth)
+      {
+        if(birthDay > currentDay)
+        {
+          alert("Invalid Birth Date");
+          return;
+        }
+      }
+    }
+
+    if(hiredYear < currentYear)
+    {
+      alert("Invalid Hired Date");
+      return;
+    }
+    else if(hiredYear >= currentYear)
+    {
+      if(hiredMonth < currentMonth)
+      {
+        alert("Invalid Hired Date");
+        return;
+      }
+      else if(hiredMonth >= currentMonth)
+      {
+        if(hiredDay < currentDay)
+        {
+          alert("Invalid Hired Date");
+          return;
+        }
+      }
+    }
+
     axios(
       "http://localhost:5000/register",
       {

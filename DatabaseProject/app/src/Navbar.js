@@ -79,6 +79,12 @@ function Navbar(props) {
             <NavLink to="/timecard" activeClassName={classes.active} className={classes.link}>
                 Timecard
             </NavLink>
+            <NavLink to="/history" activeClassName={classes.active} className={classes.link}>
+                History
+            </NavLink>
+            <NavLink to="/user" activeClassName={classes.active} className={classes.link}>
+                User
+            </NavLink>
           </div>
       </Toolbar>
     </AppBar>

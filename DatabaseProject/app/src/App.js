@@ -3,6 +3,8 @@ import './styles/App.css';
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
 import Timecard from './pages/Timecard';
+import History from './pages/History';
+import User from './pages/User';
 import {CssBaseline} from '@mui/material';
 import Navbar from './Navbar';
 import { ThemeProvider } from '@mui/styles';
@@ -42,6 +44,8 @@ class App extends React.Component {
           <Navbar isLoggedIn={true}/>          
           <SignIn setToken={this.setToken}/>
           <Timecard token={this.state.token}/>
+          <History token={this.state.token}/>
+          <User token={this.state.token}/>
         </div>
       </ThemeProvider>
     );
