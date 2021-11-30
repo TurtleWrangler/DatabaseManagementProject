@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/App.css';
 // import '../styles/Timecard.css';
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography, MenuItem, Select, InputLabel, Box, FormControl } from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
@@ -13,9 +13,11 @@ class History extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
-            startOfDays: '',
-            rows: []
+            rows: [],
+            field: '',
+            currentOptions: '',
+            queryValue: '',
+            operation: ''
         };
 
         this.columns = [
@@ -96,12 +98,18 @@ class History extends React.Component {
         );
     }
 
-    searchDate = () => {
+    searchDate = (e) => {
+        e.preventDefault();
         this.currentRowId = 0;
         axios(
-            `http://localhost:5000/hours/search/${format(new Date(this.state.startOfDays), "yyyy-MM-dd")}`,
+            "http://localhost:5000/hours/search",
             {
-                method: 'GET',
+                method: 'PUT',
+                data: {
+                    value: this.state.queryValue, 
+                    operation: this.state.operation, 
+                    field: this.state.field
+                },
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
@@ -125,27 +133,96 @@ class History extends React.Component {
         );
     }
 
+    handleSelectChange = (e) => {
+        this.setState({field:e.target.value});
+        var options;
+        switch(e.target.value){
+            case "FirstName":
+            case "LastName":
+                options = [
+                    {id: "Eq", name:"Is Equal To"},
+                    {id: "nEq", name:"Is Not Equal To"}
+                ]
+            break;
+            case "Date":
+            case "WeekStart":
+                options = [
+                    {id: "Eq", name:"Is Equal To"},
+                    {id: "nEq", name:"Is Not Equal To"},
+                    {id: "before", name:"Is Before"},
+                    {id: "after", name:"Is After"}
+                ]
+            break;
+            case "HoursWorked":
+                options = [
+                    {id: "Eq", name:"Is Equal To"},
+                    {id: "nEq", name:"Is Not Equal To"},
+                    {id: "less", name:"Is Less Than"},
+                    {id: "greater", name:"Is Greater To"}
+                ]
+            break;
+        }
+        this.setState({currentOperations: options, queryValue: ''});
+    }
+
     render() {
         return(
             <Route exact path="/history">
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     History
                 </Typography>
-                <DatePicker
-                    label="Search First Day"
-                    value={this.state.startOfDays}
-                    onChange={ e => this.setState({startOfDays: e}) }
-                    renderInput={(params) => <TextField {...params} error={false} />}
-                />
-                <Button type="submit" className="submit" onClick={() => { this.searchDate()}}>
-                    Search
-                </Button>
-                <div style={{ height: 400, width: '100%' }}>
+                <Box
+                    component="form"
+                    sx={{
+                        '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                    onSubmit={this.searchDate}
+                >
+                    <FormControl sx={{ m: 1, width: '25ch' }}>
+                        <InputLabel id="select-field-label">Field</InputLabel>
+                        <Select labelId="select-field-label" label="Field" onChange={(e) => this.handleSelectChange(e)}>
+                            <MenuItem value="FirstName">First Name</MenuItem>
+                            <MenuItem value="LastName">Last Name</MenuItem>
+                            <MenuItem value="Date">Date</MenuItem>
+                            <MenuItem value="HoursWorked">Hours Worked</MenuItem>
+                            <MenuItem value="WeekStart">Week Start Date</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width: '25ch' }}>
+                        <InputLabel id="select-operation-label">Operation</InputLabel>
+                        <Select labelId="select-operation-label" label="Operation" onChange={(e) => this.setState({operation: e.target.value})}>
+                            {this.state.currentOperations && this.state.currentOperations.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    {(this.state.field === "Date" || this.state.field === "WeekStart") && <DatePicker
+                        label="Date"
+                        value={this.state.queryValue}
+                        onChange={ e => this.setState({queryValue: format(e, "yyyy-MM-dd")}) }
+                        renderInput={(params) => <TextField {...params} error={false} />}
+                    />}
+
+                    {!(this.state.field === "Date" || this.state.field === "WeekStart") && <TextField
+                            label="Value"
+                            placeholder="Value"
+                            value={this.state.queryValue}
+                            onInput={ e => this.setState({queryValue: e.target.value}) }
+                        />}
+
+                    <Button type="submit" className="submit">
+                        Search
+                    </Button>
+                </Box>
+                <div style={{ height: 800, width: '100%' }}>
                     <DataGrid
                         disableColumnFilter
                         rows={this.state.rows}
                         columns={this.columns}
-                        pageSize={5}
+                        pageSize={20}
                         rowsPerPageOptions={[5]}
                         checkboxSelection
                     />
