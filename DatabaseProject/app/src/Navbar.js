@@ -70,9 +70,6 @@ function Navbar(props) {
             Time Management System
         </Typography>
           <div className={classes.navlinks}>
-            <Link to="/" className={classes.link}>
-                Home
-            </Link>
             <NavLink to="/sign-in" activeClassName={classes.active} className={classes.link}>
                 Sign-In
             </NavLink>

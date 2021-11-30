@@ -43,7 +43,7 @@ class SignIn extends React.Component {
 
     render() {
         return(
-            <Route exact path="/sign-in">
+            <Route exact path={["/","/sign-in"]}>
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     Welcome Back!
                 </Typography>

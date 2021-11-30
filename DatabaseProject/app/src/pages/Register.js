@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Route } from "react-router-dom";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { DatePicker } from '@mui/lab';
+import { isAfter } from 'date-fns';
 
 class Register extends React.Component {
 
@@ -39,36 +40,9 @@ class Register extends React.Component {
     e.preventDefault();
 
     var currentMonth, currentDay, currentYear, birthMonth, birthDay, birthYear, hiredMonth, hiredDay, hiredYear;
-    var today = new Date();
-    var selectedBirthDate = new Date(this.state.dateOfBirth);
-    var selectedHireDate = new Date(this.state.dateOfHire);
-
-    if(today.getMonth() === 12)
-    {
-      currentMonth = 1;
-    }
-    else
-    {
-      currentMonth = today.getMonth()+1;
-    }
-
-    if(selectedBirthDate.getMonth() === 12)
-    {
-      birthMonth = 1;
-    }
-    else
-    {
-      birthMonth = selectedBirthDate.getMonth()+1;
-    }
-
-    if(selectedHireDate.getMonth() === 12)
-    {
-      hiredMonth = 1;
-    }
-    else
-    {
-      hiredMonth = selectedHireDate.getMonth()+1;
-    }
+    const today = new Date();
+    const selectedBirthDate = new Date(this.state.dateOfBirth);
+    const selectedHireDate = new Date(this.state.dateOfHire);
 
     currentDay = today.getDate();
     currentYear = today.getFullYear();
@@ -115,48 +89,10 @@ class Register extends React.Component {
       return;
     }
 
-    if(birthYear > currentYear)
+    if(isAfter(selectedBirthDate,today))
     {
       alert("Invalid Birth Date");
       return;
-    }
-    else if(birthYear <= currentYear)
-    {
-      if(birthMonth > currentMonth)
-      {
-        alert("Invalid Birth Date");
-        return;
-      }
-      else if(birthMonth <= currentMonth)
-      {
-        if(birthDay > currentDay)
-        {
-          alert("Invalid Birth Date");
-          return;
-        }
-      }
-    }
-
-    if(hiredYear < currentYear)
-    {
-      alert("Invalid Hired Date");
-      return;
-    }
-    else if(hiredYear >= currentYear)
-    {
-      if(hiredMonth < currentMonth)
-      {
-        alert("Invalid Hired Date");
-        return;
-      }
-      else if(hiredMonth >= currentMonth)
-      {
-        if(hiredDay < currentDay)
-        {
-          alert("Invalid Hired Date");
-          return;
-        }
-      }
     }
 
     axios(
