@@ -14,36 +14,13 @@ namespace TMS_API.Controllers
     public class EmployeeController : ControllerBase
     {
         private ConnectionService _connectionService = new ConnectionService();
-
-        [Route("{searchName}")]
         [Authorization]
         [HttpGet]
-        public IEnumerable<Employee> GetUsersByName(string searchName)
+        public IEnumerable<Employee> GetEmployees()
         {
-            string query;
-            MySqlCommand cmd;
-
             _connectionService.Connect();
-            if (searchName == null)
-            {
-                query = "SELECT name_fist, name_last, occupation, email FROM employee";
-                cmd = new MySqlCommand(query, _connectionService.Connection);
-
-                using MySqlDataReader rdr1 = cmd.ExecuteReader();
-
-                List<Employee> employee1 = new List<Employee>();
-
-                while (rdr1.Read())
-                {
-                    employee1.Add(new Employee(rdr1.GetString(0), rdr1.GetString(1), rdr1.GetString(2), rdr1.GetString(3)));
-                }
-
-                return employee1;
-            }
-
-            query = "SELECT name_first, name_last, occupation, email FROM employee WHERE name_last = @lastName";
-            cmd = new MySqlCommand(query, _connectionService.Connection);
-            cmd.Parameters.Add("@lastName", MySqlDbType.VarChar, 20).Value = searchName;
+            string query = "SELECT name_first, name_last, occupation, email, address, phone_number, date_of_birth, date_of_hire FROM employee";
+            MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -51,10 +28,29 @@ namespace TMS_API.Controllers
 
             while (rdr.Read())
             {
-                employee.Add(new Employee(rdr.GetString(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3)));
+                employee.Add(new Employee(rdr.GetString(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3), rdr.GetString(4), rdr.GetString(5), rdr.GetDateTime(6), rdr.GetDateTime(7)));
             }
 
             return employee;
+        }
+
+        [Route("delete/{fullName}")]
+        [Authorization]
+        [HttpDelete]
+        public void DeleteEmployee(string fullName)
+        {
+            var names = fullName.Split(' ');
+            string firstName = names[0];
+            string lastName = names[1];
+
+            _connectionService.Connect();
+            string query = "DELETE FROM employee WHERE name_first = @firstName AND name_last = @lastName";
+            MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
+
+            cmd.Parameters.Add("@firstName", MySqlDbType.VarChar, 20).Value = firstName;
+            cmd.Parameters.Add("@lastName", MySqlDbType.VarChar, 20).Value = lastName;
+
+            using MySqlDataReader rdr = cmd.ExecuteReader();
         }
     }
 }
