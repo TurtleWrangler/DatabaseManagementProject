@@ -1,11 +1,11 @@
 import React from 'react';
 import '../styles/App.css';
 // import '../styles/Timecard.css';
-import { Text, TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
-import { format, isMonday, previousMonday } from 'date-fns';
+import { format } from 'date-fns';
 
 class User extends React.Component {
 
@@ -14,7 +14,6 @@ class User extends React.Component {
         this.state = {
             firstName: '',
             lastName: '',
-            fullName: '',
             rows: []
         };
 
@@ -101,10 +100,10 @@ class User extends React.Component {
     }
 
     deleteUser = () => {
-        this.state.fullName = this.state.firstName + " " + this.state.lastName;
+        var fullName = this.state.firstName + " " + this.state.lastName;
         this.currentRowId = 0;
         axios(
-            `http://localhost:5000/employee/delete/${this.state.fullName}`,
+            `http://localhost:5000/employee/delete/${fullName}`,
             {
                 method: 'DELETE',
                 headers: {

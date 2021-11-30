@@ -97,6 +97,7 @@ class History extends React.Component {
     }
 
     searchDate = () => {
+        this.currentRowId = 0;
         axios(
             `http://localhost:5000/hours/search/${format(new Date(this.state.startOfDays), "yyyy-MM-dd")}`,
             {
