@@ -149,7 +149,7 @@ class User extends React.Component {
         return(
             <Route exact path="/user">
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
-                    Users
+                    Employees
                 </Typography>
                 <div style={{ height: 375, width: '100%' }}>
                     <DataGrid
