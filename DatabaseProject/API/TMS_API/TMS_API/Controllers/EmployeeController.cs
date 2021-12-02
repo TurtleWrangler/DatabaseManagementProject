@@ -6,18 +6,24 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using TMS_API.Attributes;
 using TMS_API.Services;
-
 namespace TMS_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
+        private AuthService _authService = new AuthService();
         private ConnectionService _connectionService = new ConnectionService();
         [Authorization]
         [HttpGet]
         public IEnumerable<Employee> GetEmployees()
         {
+            string userId = (string)HttpContext.Items["User"];
+            if (!_authService.IsAdmin(userId))
+            {
+                return new List<Employee>();
+            }
+
             _connectionService.Connect();
             string query = "SELECT name_first, name_last, occupation, email, address, phone_number, date_of_birth, date_of_hire FROM employee";
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
@@ -39,6 +45,12 @@ namespace TMS_API.Controllers
         [HttpDelete]
         public void DeleteEmployee(string fullName)
         {
+            string userId = (string)HttpContext.Items["User"];
+            if (!_authService.IsAdmin(userId))
+            {
+                return;
+            }
+
             var names = fullName.Split(' ');
             string firstName = names[0];
             string lastName = names[1];
@@ -46,4 +58,6 @@ namespace TMS_API.Controllers
             _connectionService.Connect();
         }
     }
+    
+   
 }

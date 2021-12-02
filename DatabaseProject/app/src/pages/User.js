@@ -151,16 +151,16 @@ class User extends React.Component {
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     Employees
                 </Typography>
-                <div style={{ height: 375, width: '100%' }}>
+                <div style={{ height: 500, width: '100%' }}>
                     <DataGrid
                         disableColumnFilter
                         rows={this.state.rows}
                         columns={this.columns}
-                        pageSize={5}
+                        pageSize={10}
                         rowsPerPageOptions={[5]}
                     />
                 </div>
-                <div><b>Would you like to delete a user?</b></div>
+                {/* <div><b>Would you like to delete a user?</b></div>
                 <TextField
                   id="outlined-firstname-required"
                   label="First Name"
@@ -175,10 +175,10 @@ class User extends React.Component {
                   value={this.state.lastName}
                   onInput={ e => this.setState({lastName: e.target.value}) }
                 />
-                <br></br>
-                <Button type="submit" className="submit" onClick={() => { this.deleteUser()}}>
+                <br></br> */}
+                {/* <Button type="submit" className="submit" onClick={() => { this.deleteUser()}}>
                   Delete
-                </Button>
+                </Button> */}
             </Route>
         );
     }

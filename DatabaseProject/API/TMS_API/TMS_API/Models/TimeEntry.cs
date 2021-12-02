@@ -5,7 +5,7 @@ namespace TMS_API
     public class TimeEntry
     {
         public TimeEntry() { }
-        public TimeEntry(string id, DateTime date, int hoursWorked, string comments, DateTime submissionTime, DateTime weekStartDate)
+        public TimeEntry(string id, DateTime date, float hoursWorked, string comments, DateTime submissionTime, DateTime weekStartDate)
         {
             EmployeeID = id;
             Date = date;
@@ -18,7 +18,7 @@ namespace TMS_API
 
         public DateTime Date { get; set; }
 
-        public int? HoursWorked { get; set; }
+        public float? HoursWorked { get; set; }
 
         public string? Comments { get; set; }
 

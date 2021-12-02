@@ -13,6 +13,7 @@ namespace TMS_API.Controllers
     [Route("[controller]")]
     public class HoursController : ControllerBase
     {
+        private AuthService _authService = new AuthService();
         private ConnectionService _connectionService = new ConnectionService();
         [Authorization]
         [HttpGet]
@@ -20,11 +21,20 @@ namespace TMS_API.Controllers
         {
             string userId = (string)HttpContext.Items["User"];
             _connectionService.Connect();
-            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee NATURAL JOIN time_entry WHERE employee.id = @id AND time_entry.employee_id = @employeeID;";
+            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id;";
+
+            if (!_authService.IsAdmin(userId))
+            {
+                query = query + " AND employee.id = @id";
+            }
+            else
+            {
+                query = query + ";";
+            }
+
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
-            cmd.Parameters.Add("@employeeID", MySqlDbType.VarChar, 36).Value = userId;
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -38,19 +48,47 @@ namespace TMS_API.Controllers
             return employeeTimesheet;
         }
 
-        [Route("search/{searchDate}")]
+        [Route("search")]
         [Authorization]
-        [HttpGet]
-        public IEnumerable<EmployeeTimesheet> GetHoursBySearchDate(DateTime searchDate)
+        [HttpPut]
+        public IEnumerable<EmployeeTimesheet> Search(QueryRequest request)
         {
+            QueryRequest sanitizedRequest = new QueryRequest(request.Value, request.Operation, request.Field);
+            if (sanitizedRequest.Operation == "" || sanitizedRequest.Field == "")
+            {
+                return new List<EmployeeTimesheet>();
+            }
+
             string userId = (string)HttpContext.Items["User"];
             _connectionService.Connect();
-            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee NATURAL JOIN time_entry WHERE employee.id = @id AND time_entry.employee_id = @employeeID AND time_entry.date >= @searchDate;";
+            string query = $"SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id AND {sanitizedRequest.Field} {sanitizedRequest.Operation} @value";
+
+            if (!_authService.IsAdmin(userId))
+            {
+                query = query + " AND employee.id = @id";
+            }
+            else
+            {
+                query = query + ";";
+            }
+
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
-            cmd.Parameters.Add("@employeeID", MySqlDbType.VarChar, 36).Value = userId;
-            cmd.Parameters.Add("@searchDate", MySqlDbType.Date).Value = searchDate;
+
+            if(sanitizedRequest.Field == "time_entry.date" || sanitizedRequest.Field == "time_entry.week_start_date")
+            {
+                cmd.Parameters.Add("@value", MySqlDbType.Date).Value = sanitizedRequest.Value;
+            }
+            else if(sanitizedRequest.Field == "time_entry.hours_worked")
+            {
+                cmd.Parameters.Add("@value", MySqlDbType.Decimal).Value = sanitizedRequest.Value;
+
+            }
+            else
+            {
+                cmd.Parameters.Add("@value", MySqlDbType.VarChar, 36).Value = sanitizedRequest.Value;
+            }
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
