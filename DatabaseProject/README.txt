@@ -5,18 +5,15 @@ Step 1:
 - Open Visual Studio and VS Code
 
 Step 2:
-- In VS Code, open the ?????? folder
+- In VS Code, open the DatabaseProject folder
     - Open a terminal and type "cd app"
 
 Step 3:
-- In Visual Studio, open the TMS_API.sln file located in the following location ""
+- In Visual Studio, open the TMS_API.sln file located in the following location "DatabaseProject\API\TMS_API"
 
 Step 4:
-- In MySQL, create a connection with the following information:
-    - Hostname: 
-    - Port: 
-    - Username: 
-    - Password:
+- In MySQL, create a basic connection to a database
+    - Run the database scripts located in DatabaseScripts folder
 
 Step 5:
 - In VS Code, once you cd into app, type npm install to install the node_modules folder
@@ -28,15 +25,3 @@ Step 7:
 - In VS Code, start the UI by typing npm start in the terminal
 
 Hopefully everything works!!
-
-BUILD SCRIPT STUFF:
-
-npm install @material-ui/core
-npm i react
-npm install @mui/styles
-npm install axios
-npm i react-router
-npm i date-fns
-npm install @material-ui/icons
-npm install @material-ui/lab
-npm install @material-ui/data-grid
