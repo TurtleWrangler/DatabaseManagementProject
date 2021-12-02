@@ -44,41 +44,6 @@ namespace TMS_API.Controllers
             string lastName = names[1];
 
             _connectionService.Connect();
-            string query1 = "SELECT id FROM employee WHERE name_first = @firstName AND name_last = @lastName";
-            MySqlCommand cmd1 = new MySqlCommand(query1, _connectionService.Connection);
-
-            cmd1.Parameters.Add("@firstName", MySqlDbType.VarChar, 20).Value = firstName;
-            cmd1.Parameters.Add("@lastName", MySqlDbType.VarChar, 20).Value = lastName;
-
-            using MySqlDataReader rdr1 = cmd1.ExecuteReader();
-
-            List<EmployeeID> id = new List<EmployeeID>();
-
-            while (rdr1.Read())
-            {
-                id.Add(new EmployeeID(rdr1.GetString(0)));
-            }
-
-            string query2 = "DELETE FROM login_information WHERE eId = @id";
-            MySqlCommand cmd2 = new MySqlCommand(query2, _connectionService.Connection);
-
-            cmd2.Parameters.Add("@id", MySqlDbType.VarChar, 20).Value = id[0].ID;
-
-            using MySqlDataReader rdr2 = cmd2.ExecuteReader();
-
-            string query3 = "DELETE FROM time_entry WHERE employee_id = @id";
-            MySqlCommand cmd3 = new MySqlCommand(query3, _connectionService.Connection);
-
-            cmd3.Parameters.Add("@id", MySqlDbType.VarChar, 20).Value = id[0].ID;
-
-            using MySqlDataReader rdr3 = cmd3.ExecuteReader();
-
-            string query4 = "DELETE FROM timesheet WHERE employee_id = @id";
-            MySqlCommand cmd4 = new MySqlCommand(query4, _connectionService.Connection);
-
-            cmd4.Parameters.Add("@id", MySqlDbType.VarChar, 20).Value = id[0].ID;
-
-            using MySqlDataReader rdr4 = cmd4.ExecuteReader();
         }
     }
 }
