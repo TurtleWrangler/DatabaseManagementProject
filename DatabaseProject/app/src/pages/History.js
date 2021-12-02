@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/App.css';
-// import '../styles/Timecard.css';
 import { TextField, Button, Typography, MenuItem, Select, InputLabel, Box, FormControl } from '@mui/material';
 import axios from 'axios';
 import { Route } from "react-router-dom";
@@ -217,7 +216,7 @@ class History extends React.Component {
                         Search
                     </Button>
                 </Box>
-                <div style={{ height: 800, width: '100%' }}>
+                <div style={{ height: 500, width: '100%' }}>
                     <DataGrid
                         disableColumnFilter
                         rows={this.state.rows}
