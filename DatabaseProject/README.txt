@@ -28,3 +28,15 @@ Step 7:
 - In VS Code, start the UI by typing npm start in the terminal
 
 Hopefully everything works!!
+
+BUILD SCRIPT STUFF:
+
+npm install @material-ui/core
+npm i react
+npm install @mui/styles
+npm install axios
+npm i react-router
+npm i date-fns
+npm install @material-ui/icons
+npm install @material-ui/lab
+npm install @material-ui/data-grid
