@@ -15,12 +15,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: ''
+      token: '',
+      isAdmin: false
     };
   }
 
-  setToken = newToken => {
-    this.setState({token: newToken});
+  setTokenAndAdmin = (newToken,adminStatus) => {
+    this.setState({token: newToken, isAdmin: adminStatus});
   }
 
   render() {
@@ -29,8 +30,8 @@ class App extends React.Component {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className="App">
-            <Navbar isLoggedIn={false}/>
-            <SignIn setToken={this.setToken}/>
+            <Navbar isLoggedIn={false} isAdmin={this.state.isAdmin}/>
+            <SignIn setToken={this.setTokenAndAdmin}/>
             <Register />
           </div>
         </ThemeProvider>
@@ -41,11 +42,11 @@ class App extends React.Component {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="App">
-          <Navbar isLoggedIn={true}/>          
-          <SignIn setToken={this.setToken}/>
+          <Navbar isLoggedIn={true} isAdmin={this.state.isAdmin}/>          
+          <SignIn setToken={this.setTokenAndAdmin}/>
           <Timecard token={this.state.token}/>
           <History token={this.state.token}/>
-          <User token={this.state.token}/>
+          {this.state.isAdmin && <User token={this.state.token}/>}
         </div>
       </ThemeProvider>
     );

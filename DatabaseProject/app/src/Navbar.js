@@ -79,9 +79,9 @@ function Navbar(props) {
             <NavLink to="/history" activeClassName={classes.active} className={classes.link}>
                 History
             </NavLink>
-            <NavLink to="/user" activeClassName={classes.active} className={classes.link}>
+            {this.props.isAdmin && <NavLink to="/user" activeClassName={classes.active} className={classes.link}>
                 Employees
-            </NavLink>
+            </NavLink>}
           </div>
       </Toolbar>
     </AppBar>
