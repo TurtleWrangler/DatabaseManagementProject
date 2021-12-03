@@ -13,6 +13,7 @@ namespace TMS_API.Controllers
     [Route("[controller]")]
     public class HoursController : ControllerBase
     {
+        private AuthService _authService = new AuthService();
         private ConnectionService _connectionService = new ConnectionService();
         [Authorization]
         [HttpGet]
@@ -20,7 +21,17 @@ namespace TMS_API.Controllers
         {
             string userId = (string)HttpContext.Items["User"];
             _connectionService.Connect();
-            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id;";
+            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id";
+
+            if (!_authService.IsAdmin(userId))
+            {
+                query = query + " AND employee.id = @id;";
+            }
+            else
+            {
+                query = query + ";";
+            }
+
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
@@ -50,7 +61,17 @@ namespace TMS_API.Controllers
 
             string userId = (string)HttpContext.Items["User"];
             _connectionService.Connect();
-            string query = $"SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id AND {sanitizedRequest.Field} {sanitizedRequest.Operation} @value;";
+            string query = $"SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id AND {sanitizedRequest.Field} {sanitizedRequest.Operation} @value";
+
+            if (!_authService.IsAdmin(userId))
+            {
+                query = query + " AND employee.id = @id";
+            }
+            else
+            {
+                query = query + ";";
+            }
+
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
             cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = userId;
