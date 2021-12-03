@@ -12,7 +12,7 @@ namespace TMS_API.Services
         public bool IsAdmin(string id)
         {
             _connectionService.Connect();
-            string query = "SELECT eId, isManager FROM login-information WHERE eId = @id LIMIT 1";
+            string query = "SELECT employee_id, is_manager FROM login_information WHERE employee_id = @id LIMIT 1;";
             MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
             cmd.Parameters.Add("@id", MySqlDbType.VarChar, 36).Value = id;
 
@@ -23,7 +23,7 @@ namespace TMS_API.Services
             while (rdr.Read())
             {
                 info.EmployeeID = rdr.GetString(0);
-                info.IsManager = bool.Parse(rdr.GetString(1));
+                info.IsManager = rdr.GetString(1) == "1" ? true : false;
             }
 
             return info.IsManager;
