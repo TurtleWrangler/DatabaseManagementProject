@@ -21,11 +21,11 @@ namespace TMS_API.Controllers
         {
             string userId = (string)HttpContext.Items["User"];
             _connectionService.Connect();
-            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id;";
+            string query = "SELECT name_first, name_last, date, hours_worked, comments, week_start_date, submission_time FROM employee JOIN time_entry WHERE employee.id = time_entry.employee_id";
 
             if (!_authService.IsAdmin(userId))
             {
-                query = query + " AND employee.id = @id";
+                query = query + " AND employee.id = @id;";
             }
             else
             {

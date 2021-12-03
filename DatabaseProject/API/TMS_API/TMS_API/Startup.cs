@@ -56,7 +56,6 @@ namespace TMS_API
                 endpoints.MapControllers();
             });
 
-            //Authorization Middleware
         }
     }
 }

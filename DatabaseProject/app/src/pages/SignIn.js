@@ -32,7 +32,7 @@ class SignIn extends React.Component {
                   mode: 'no-cors'
                 }
               }).then((data) => {
-                this.props.setTokenAndAdmin(data.data.token, data.data.IsManager);
+                this.props.setTokenAndAdmin(data.data.token, data.data.isManager);
             }
         );
     }

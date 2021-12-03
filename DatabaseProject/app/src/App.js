@@ -31,7 +31,7 @@ class App extends React.Component {
           <CssBaseline />
           <div className="App">
             <Navbar isLoggedIn={false} isAdmin={this.state.isAdmin}/>
-            <SignIn setToken={this.setTokenAndAdmin}/>
+            <SignIn setTokenAndAdmin={this.setTokenAndAdmin}/>
             <Register />
           </div>
         </ThemeProvider>
@@ -43,7 +43,7 @@ class App extends React.Component {
         <CssBaseline />
         <div className="App">
           <Navbar isLoggedIn={true} isAdmin={this.state.isAdmin}/>          
-          <SignIn setToken={this.setTokenAndAdmin}/>
+          <SignIn setTokenAndAdmin={this.setTokenAndAdmin}/>
           <Timecard token={this.state.token}/>
           <History token={this.state.token}/>
           {this.state.isAdmin && <User token={this.state.token}/>}
