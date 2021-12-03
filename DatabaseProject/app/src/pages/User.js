@@ -145,12 +145,47 @@ class User extends React.Component {
         );
     }
 
+    refreshTable = () => {
+        this.currentRowId = 0;
+        axios(
+            "http://localhost:5000/employee",
+            {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token,
+                mode: 'no-cors'
+                }
+            }).then((data) => {
+                data.data.map(row => {
+                    row.id = this.currentRowId;
+                    ++this.currentRowId;
+                    return row;
+                });
+                for(var i = 0; i < data.data.length; i++)
+                {
+                    data.data[i].phoneNumber = data.data[i].phoneNumber[0]+data.data[i].phoneNumber[1]+data.data[i].phoneNumber[2]+"-"+
+                                               data.data[i].phoneNumber[3]+data.data[i].phoneNumber[4]+data.data[i].phoneNumber[5]+"-"+
+                                               data.data[i].phoneNumber[6]+data.data[i].phoneNumber[7]+data.data[i].phoneNumber[8]+
+                                               data.data[i].phoneNumber[9];
+                    data.data[i].dateOfBirth = format(new Date(data.data[i].dateOfBirth), "yyyy-MM-dd");
+                    data.data[i].dateOfHire = format(new Date(data.data[i].dateOfHire), "yyyy-MM-dd");
+                }
+                this.setState({rows: data.data});
+            }
+        );
+    }
+
     render() {
         return(
             <Route exact path="/user">
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     Employees
                 </Typography>
+                <Button type="submit" className="submit" onClick={() => { this.refreshTable()}}>
+                    Refresh Table
+                </Button>
                 <div style={{ height: 500, width: '100%' }}>
                     <DataGrid
                         disableColumnFilter
@@ -160,6 +195,7 @@ class User extends React.Component {
                         rowsPerPageOptions={[5]}
                     />
                 </div>
+                {/* Deleting a user was giving us trouble, so we took it out */}
                 {/* <div><b>Would you like to delete a user?</b></div>
                 <TextField
                   id="outlined-firstname-required"
@@ -175,8 +211,8 @@ class User extends React.Component {
                   value={this.state.lastName}
                   onInput={ e => this.setState({lastName: e.target.value}) }
                 />
-                <br></br> */}
-                {/* <Button type="submit" className="submit" onClick={() => { this.deleteUser()}}>
+                <br></br>
+                <Button type="submit" className="submit" onClick={() => { this.deleteUser()}}>
                   Delete
                 </Button> */}
             </Route>
