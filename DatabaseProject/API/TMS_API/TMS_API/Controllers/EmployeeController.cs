@@ -56,13 +56,40 @@ namespace TMS_API.Controllers
             string lastName = names[1];
 
             _connectionService.Connect();
-            string query = "DELETE FROM employee WHERE name_first = @firstName AND name_last = @lastName";
-            MySqlCommand cmd = new MySqlCommand(query, _connectionService.Connection);
 
-            cmd.Parameters.Add("@firstName", MySqlDbType.VarChar, 20).Value = firstName;
-            cmd.Parameters.Add("@lastName", MySqlDbType.VarChar, 20).Value = lastName;
+            MySqlTransaction myTrans;
+            myTrans = _connectionService.Connection.BeginTransaction();
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
+            string query1 = "DELETE FROM time_entry WHERE employee_id=(SELECT id FROM employee WHERE name_first=@firstNameEntry AND name_last=@lastNameEntry)";
+            string query2 = "DELETE FROM timesheet WHERE employee_id=(SELECT id FROM employee WHERE name_first=@firstNameTimesheet AND name_last=@lastNameTimesheet)";
+            string query3 = "DELETE FROM login_information WHERE employee_id=(SELECT id FROM employee WHERE name_first=@firstNameLogin AND name_last=@lastNameLogin)";
+            string query4 = "DELETE FROM employee WHERE name_first=@firstNameEmployee AND name_last=@lastNameEmployee";
+
+            MySqlCommand cmd1 = new MySqlCommand(query1, _connectionService.Connection, myTrans);
+            cmd1.Parameters.Add("@firstNameEntry", MySqlDbType.VarChar, 20).Value = firstName;
+            cmd1.Parameters.Add("@lastNameEntry", MySqlDbType.VarChar, 20).Value = lastName;
+
+            cmd1.ExecuteNonQuery();
+
+            MySqlCommand cmd2 = new MySqlCommand(query2, _connectionService.Connection, myTrans);
+            cmd2.Parameters.Add("@firstNameTimesheet", MySqlDbType.VarChar, 20).Value = firstName;
+            cmd2.Parameters.Add("@lastNameTimesheet", MySqlDbType.VarChar, 20).Value = lastName;
+
+            cmd2.ExecuteNonQuery();
+
+            MySqlCommand cmd3 = new MySqlCommand(query3, _connectionService.Connection, myTrans);
+            cmd3.Parameters.Add("@firstNameLogin", MySqlDbType.VarChar, 20).Value = firstName;
+            cmd3.Parameters.Add("@lastNameLogin", MySqlDbType.VarChar, 20).Value = lastName;
+
+            cmd3.ExecuteNonQuery();
+
+            MySqlCommand cmd4 = new MySqlCommand(query4, _connectionService.Connection, myTrans);
+            cmd4.Parameters.Add("@firstNameEmployee", MySqlDbType.VarChar, 20).Value = firstName;
+            cmd4.Parameters.Add("@lastNameEmployee", MySqlDbType.VarChar, 20).Value = lastName;
+
+            cmd4.ExecuteNonQuery();
+
+            myTrans.Commit();
         }
     }
     

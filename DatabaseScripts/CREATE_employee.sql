@@ -11,6 +11,6 @@ CREATE TABLE `employee` (
   `date_of_hire` date NOT NULL,
   `date_of_dismissal` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `dept_id_UNIQUE` (`dept_id`),
+  KEY `dept_id_idx` (`dept_id`),
   CONSTRAINT `dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

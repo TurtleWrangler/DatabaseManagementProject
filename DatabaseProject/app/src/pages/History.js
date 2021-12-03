@@ -164,12 +164,44 @@ class History extends React.Component {
         this.setState({currentOperations: options, queryValue: ''});
     }
 
+    refreshTable = () => {
+        this.currentRowId = 0;
+        axios(
+            "http://localhost:5000/hours",
+            {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token,
+                mode: 'no-cors'
+                }
+            }).then((data) => {
+                data.data.map(row => {
+                    row.id = this.currentRowId;
+                    ++this.currentRowId;
+                    return row;
+                });
+                for(var i = 0; i < data.data.length; i++)
+                {
+                    data.data[i].date = format(new Date(data.data[i].date), "yyyy-MM-dd");
+                    data.data[i].submissionTime = format(new Date(data.data[i].submissionTime), "hh-mm aa");
+                    data.data[i].weekStartDate = format(new Date(data.data[i].weekStartDate), "yyyy-MM-dd");
+                }
+                this.setState({rows: data.data});
+            }
+        );
+    }
+
     render() {
         return(
             <Route exact path="/history">
                 <Typography variant="h2" component="div" gutterBottom className='heading'>
                     History
                 </Typography>
+                <Button type="submit" className="submit" onClick={() => { this.refreshTable()}}>
+                    Refresh Table
+                </Button>
                 <Box
                     component="form"
                     sx={{
