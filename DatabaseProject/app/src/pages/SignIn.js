@@ -32,6 +32,12 @@ class SignIn extends React.Component {
                   mode: 'no-cors'
                 }
               }).then((data) => {
+                if(data.data.result != "Success!"){
+                    alert("Invalid Username or Password!");
+                }
+                else{
+                    alert("Login success!");
+                }
                 this.props.setTokenAndAdmin(data.data.token, data.data.isManager);
             }
         );
